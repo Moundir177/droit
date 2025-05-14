@@ -272,6 +272,7 @@ export default function ReviewPage() {
         subtitle={language === 'fr' 
                 ? 'Explorez nos analyses et publications sur les droits humains et les enjeux juridiques actuels' 
                 : 'استكشف تحليلاتنا ومنشوراتنا حول حقوق الإنسان والقضايا القانونية الحالية'}
+        language={language}
       />
 
       {/* Breadcrumbs */}

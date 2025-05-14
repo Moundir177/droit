@@ -6,10 +6,10 @@ import { useState, useEffect } from 'react';
 interface PageHeaderProps {
   title: string;
   subtitle?: string;
-  language: 'fr' | 'ar';
+  language?: 'fr' | 'ar';
 }
 
-export default function PageHeader({ title, subtitle, language }: PageHeaderProps) {
+export default function PageHeader({ title, subtitle, language = 'fr' }: PageHeaderProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
