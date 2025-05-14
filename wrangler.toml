@@ -6,7 +6,7 @@ entry-point = "."
 include = ["_headers", "_redirects"]
 
 [env.production]
-name = "droit"
+name = "droit-site"
 route = ""
 workers_dev = true
 compatibility_date = "2023-05-14"
@@ -17,4 +17,7 @@ output_directory = "out"
 
 [[env.production.routes]]
 pattern = "/*"
-script = "" 
+script = ""
+
+# Add Pages configuration
+pages_build_output_dir = "out" 
