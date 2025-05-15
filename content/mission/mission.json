@@ -1,0 +1,29 @@
+{
+  "title_fr": "Notre Mission",
+  "title_ar": "مهمتنا",
+  "description_fr": "La Fondation pour la Promotion des Droits œuvre pour renforcer une culture des droits et autonomiser les groupes vulnérables. À travers nos programmes et initiatives, nous visons à créer un monde où chaque personne peut pleinement jouir de ses droits fondamentaux.",
+  "description_ar": "تعمل مؤسسة تعزيز الحقوق على تقوية ثقافة الحقوق وتمكين الفئات الضعيفة. من خلال برامجنا ومبادراتنا، نهدف إلى خلق عالم يمكن فيه لكل شخص أن يتمتع بشكل كامل بحقوقه الأساسية.",
+  "points": [
+    {
+      "text_fr": "Promotion des principes démocratiques et de l'état de droit",
+      "text_ar": "تعزيز المبادئ الديمقراطية وسيادة القانون"
+    },
+    {
+      "text_fr": "Protection des droits des populations vulnérables",
+      "text_ar": "حماية حقوق الفئات الضعيفة"
+    },
+    {
+      "text_fr": "Éducation et sensibilisation aux droits",
+      "text_ar": "التعليم والتوعية بالحقوق"
+    },
+    {
+      "text_fr": "Renforcement des capacités de la société civile",
+      "text_ar": "تعزيز قدرات المجتمع المدني"
+    }
+  ],
+  "image": "/images/droits-egaux.jpg",
+  "image_title_fr": "Droits Égaux",
+  "image_title_ar": "حقوق متساوية",
+  "image_description_fr": "Nous croyons que le respect des droits humains est essentiel au développement de sociétés justes et pacifiques. Notre travail se concentre sur la garantie que ces droits soient connus, reconnus et défendus.",
+  "image_description_ar": "نؤمن بأن احترام حقوق الإنسان أمر ضروري لتطوير مجتمعات عادلة وسلمية. يركز عملنا على ضمان أن تكون هذه الحقوق معروفة ومعترف بها ومدافع عنها."
+} 

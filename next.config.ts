@@ -1,12 +1,22 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  output: 'export',
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    unoptimized: true,
+    domains: ['assets.tina.io'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
-  trailingSlash: true,
-  reactStrictMode: false,
+  async rewrites() {
+    return [
+      {
+        source: '/admin',
+        destination: '/admin',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

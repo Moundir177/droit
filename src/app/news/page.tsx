@@ -1,27 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import PageHeader from '@/components/PageHeader';
+import { getNewsItems } from '@/lib/tina';
+import Image from 'next/image';
 
 type Language = 'fr' | 'ar';
 
-interface TranslatedText {
-  fr: string;
-  ar: string;
-}
-
 interface NewsItem {
-  id: number;
-  title: TranslatedText;
-  date: TranslatedText;
-  author: TranslatedText;
-  category: TranslatedText;
-  excerpt: TranslatedText;
+  _sys: {
+    filename: string;
+  };
+  title_fr: string;
+  title_ar: string;
+  date: string;
+  author_fr: string;
+  author_ar: string;
+  category_fr: string;
+  category_ar: string;
+  excerpt_fr: string;
+  excerpt_ar: string;
   image: string;
-  slug: string;
-  content: string;
 }
 
 interface Category {
@@ -30,221 +31,11 @@ interface Category {
   ar: string;
 }
 
-const newsItems: NewsItem[] = [
-  {
-    id: 1,
-    title: {
-      fr: 'Publication du Rapport Annuel 2023',
-      ar: 'نشر التقرير السنوي 2023'
-    },
-    date: {
-      fr: '18 août 2023',
-      ar: '18 أغسطس 2023'
-    },
-    author: {
-      fr: 'Équipe de recherche',
-      ar: 'فريق البحث'
-    },
-    category: {
-      fr: 'Rapports',
-      ar: 'تقارير'
-    },
-    excerpt: {
-      fr: 'Notre rapport annuel sur l\'état des droits est désormais disponible. Ce document de référence présente une analyse détaillée des avancées et des défis en matière de droits humains au cours de l\'année écoulée.',
-      ar: 'تقريرنا السنوي عن حالة الحقوق متاح الآن. تقدم هذه الوثيقة المرجعية تحليلاً مفصلاً للتقدم والتحديات في مجال حقوق الإنسان خلال العام الماضي.'
-    },
-    image: '/images/report.jpg',
-    slug: '/news/rapport-annuel-2023',
-    content: 'Texte de contenu à remplir pour cet article.'
-  },
-  {
-    id: 2,
-    title: {
-      fr: 'Formation sur les Droits Fondamentaux',
-      ar: 'تدريب على الحقوق الأساسية'
-    },
-    date: {
-      fr: '25 août 2023',
-      ar: '25 أغسطس 2023'
-    },
-    author: {
-      fr: 'Équipe de formation',
-      ar: 'فريق التدريب'
-    },
-    category: {
-      fr: 'Formation',
-      ar: 'تدريب'
-    },
-    excerpt: {
-      fr: 'Nouvelle session de formation prévue dans la ville pour les défenseurs des droits, axée sur les mécanismes de protection internationaux.',
-      ar: 'دورة تدريبية جديدة مخططة في المدينة للمدافعين عن الحقوق، تركز على آليات الحماية الدولية.'
-    },
-    image: '/images/training.jpg',
-    slug: '/news/formation-droits-fondamentaux',
-    content: 'Texte de contenu à remplir pour cet article.'
-  },
-  {
-    id: 3,
-    title: {
-      fr: 'Collaboration avec des ONG Internationales',
-      ar: 'التعاون مع المنظمات غير الحكومية الدولية'
-    },
-    date: {
-      fr: '10 août 2023',
-      ar: '10 أغسطس 2023'
-    },
-    author: {
-      fr: 'Équipe des partenariats',
-      ar: 'فريق الشراكات'
-    },
-    category: {
-      fr: 'Partenariats',
-      ar: 'شراكات'
-    },
-    excerpt: {
-      fr: 'Un nouveau partenariat stratégique avec des organisations internationales pour renforcer la promotion des droits.',
-      ar: 'شراكة استراتيجية جديدة مع منظمات دولية لتعزيز الحقوق.'
-    },
-    image: '/images/partnership.jpg',
-    slug: '/news/collaboration-ong-internationales',
-    content: 'Texte de contenu à remplir pour cet article.'
-  },
-  {
-    id: 4,
-    title: {
-      fr: 'Table Ronde sur les Réformes Juridiques',
-      ar: 'طاولة مستديرة حول الإصلاحات القانونية'
-    },
-    date: {
-      fr: '5 août 2023',
-      ar: '5 أغسطس 2023'
-    },
-    author: {
-      fr: 'Équipe des événements',
-      ar: 'فريق الفعاليات'
-    },
-    category: {
-      fr: 'Événements',
-      ar: 'فعاليات'
-    },
-    excerpt: {
-      fr: 'Une journée d\'étude dédiée aux récentes réformes juridiques et à leur impact sur les droits des citoyens.',
-      ar: 'يوم دراسي مخصص للإصلاحات القانونية الأخيرة وتأثيرها على حقوق المواطنين.'
-    },
-    image: '/images/event.jpg',
-    slug: '/news/table-ronde-reformes-juridiques',
-    content: 'Texte de contenu à remplir pour cet article.'
-  },
-  {
-    id: 5,
-    title: {
-      fr: 'Lancement de l\'Initiative Droits des Jeunes',
-      ar: 'إطلاق مبادرة حقوق الشباب'
-    },
-    date: {
-      fr: '28 juillet 2023',
-      ar: '28 يوليو 2023'
-    },
-    author: {
-      fr: 'Équipe des programmes',
-      ar: 'فريق البرامج'
-    },
-    category: {
-      fr: 'Programmes',
-      ar: 'برامج'
-    },
-    excerpt: {
-      fr: 'Une nouvelle initiative visant à éduquer les jeunes sur leurs droits et à encourager leur engagement civique.',
-      ar: 'مبادرة جديدة تهدف إلى تثقيف الشباب حول حقوقهم وتشجيع مشاركتهم المدنية.'
-    },
-    image: '/images/youth.jpg',
-    slug: '/news/initiative-droits-jeunes',
-    content: 'Texte de contenu à remplir pour cet article.'
-  },
-  {
-    id: 6,
-    title: {
-      fr: 'Conférence sur les Droits Numériques',
-      ar: 'مؤتمر حول الحقوق الرقمية'
-    },
-    date: {
-      fr: '15 juillet 2023',
-      ar: '15 يوليو 2023'
-    },
-    author: {
-      fr: 'Équipe des événements',
-      ar: 'فريق الفعاليات'
-    },
-    category: {
-      fr: 'Événements',
-      ar: 'فعاليات'
-    },
-    excerpt: {
-      fr: 'Une conférence abordant les défis et les opportunités de la protection des droits à l\'ère numérique.',
-      ar: 'مؤتمر يتناول تحديات وفرص حماية الحقوق في العصر الرقمي.'
-    },
-    image: '/images/digital.jpg',
-    slug: '/news/conference-droits-numeriques',
-    content: 'Texte de contenu à remplir pour cet article.'
-  },
-  {
-    id: 7,
-    title: {
-      fr: 'Guide sur l\'Accès à la Justice',
-      ar: 'دليل حول الوصول إلى العدالة'
-    },
-    date: {
-      fr: '5 juillet 2023',
-      ar: '5 يوليو 2023'
-    },
-    author: {
-      fr: 'Équipe des publications',
-      ar: 'فريق المنشورات'
-    },
-    category: {
-      fr: 'Publications',
-      ar: 'منشورات'
-    },
-    excerpt: {
-      fr: 'Publication d\'un guide pratique pour aider les citoyens à comprendre et à naviguer dans le système judiciaire.',
-      ar: 'نشر دليل عملي لمساعدة المواطنين على فهم نظام العدالة والتنقل فيه.'
-    },
-    image: '/images/justice.jpg',
-    slug: '/news/guide-acces-justice',
-    content: 'Texte de contenu à remplir pour cet article. Ce guide pratique offre des informations essentielles sur le système judiciaire et les procédures à suivre pour accéder à la justice.'
-  },
-  {
-    id: 8,
-    title: {
-      fr: 'Atelier sur les Droits des Femmes',
-      ar: 'ورشة عمل حول حقوق المرأة'
-    },
-    date: {
-      fr: '28 juin 2023',
-      ar: '28 يونيو 2023'
-    },
-    author: {
-      fr: 'Équipe de formation',
-      ar: 'فريق التدريب'
-    },
-    category: {
-      fr: 'Formation',
-      ar: 'تدريب'
-    },
-    excerpt: {
-      fr: 'Un atelier axé sur les droits des femmes et les stratégies de lutte contre la discrimination fondée sur le genre.',
-      ar: 'ورشة عمل تركز على حقوق المرأة واستراتيجيات مكافحة التمييز القائم على النوع الاجتماعي.'
-    },
-    image: '/images/women.jpg',
-    slug: '/news/atelier-droits-femmes',
-    content: 'Texte de contenu à remplir pour cet article. Cet atelier a réuni des experts et des participants pour discuter des stratégies efficaces de lutte contre la discrimination fondée sur le genre.'
-  }
-];
-
 export default function NewsPage() {
   const { language, t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   
   const categories: Category[] = [
     { id: 'all', fr: 'Tous', ar: 'الكل' },
@@ -259,13 +50,28 @@ export default function NewsPage() {
     return language === 'fr' ? category.fr : category.ar;
   };
   
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const fetchedNews = await getNewsItems();
+        if (fetchedNews && Array.isArray(fetchedNews)) {
+          setNewsItems(fetchedNews as NewsItem[]);
+        }
+      } catch (error) {
+        console.error('Error fetching news items:', error);
+      }
+    };
+    
+    fetchNews();
+  }, []);
+  
   const filteredNews = newsItems.filter(item => {
     const matchesSearch = searchTerm === '' || 
-      item.title[language].toLowerCase().includes(searchTerm.toLowerCase()) || 
-      item.excerpt[language].toLowerCase().includes(searchTerm.toLowerCase());
+      (item.title_fr?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+       item.excerpt_fr?.toLowerCase().includes(searchTerm.toLowerCase()));
     
     const matchesCategory = activeCategory === 'all' || 
-      item.category[language].toLowerCase() === getCategoryName(categories.find(cat => cat.id === activeCategory) || categories[0]).toLowerCase();
+      item.category_fr?.toLowerCase() === getCategoryName(categories.find(cat => cat.id === activeCategory) || categories[0]).toLowerCase();
     
     return matchesSearch && matchesCategory;
   });
@@ -352,30 +158,48 @@ export default function NewsPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredNews.map(item => (
-                <div key={item.id} className={`bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow ${textAlign}`}>
-                  <div className="h-48 bg-gradient-to-r from-[#171717]/80 to-[#8FD694]/60 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <span className="text-white text-lg font-bold">FPRA</span>
+              {filteredNews.map((item) => (
+                <div key={item._sys.filename} className={`bg-white rounded-lg shadow-md overflow-hidden ${textAlign}`}>
+                  {item.image && (
+                    <div className="relative h-48 w-full">
+                      <Image
+                        src={item.image}
+                        alt={item.title_fr}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                      />
                     </div>
-                  </div>
+                  )}
                   <div className="p-6">
-                    <div className={`flex items-center ${language === 'ar' ? 'flex-row-reverse' : ''} mb-3`}>
-                      <span className="inline-block bg-[#8FD694]/10 text-[#171717] px-3 py-1 text-xs font-semibold rounded-full">
-                        {item.category[language]}
-                      </span>
-                      <span className={`text-xs text-gray-500 ${language === 'ar' ? 'ml-auto' : 'ml-2'}`}>
-                        {item.date[language]}
-                      </span>
+                    <span className="inline-block bg-[#8FD694] text-black px-3 py-1 text-sm font-semibold rounded-full mb-3">
+                      {item.category_fr}
+                    </span>
+                    <h2 className="text-xl font-bold mb-2">{item.title_fr}</h2>
+                    <p className="text-gray-600 mb-4">{item.excerpt_fr}</p>
+                    <div className="flex items-center text-sm text-gray-500 mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      {new Date(item.date).toLocaleDateString('fr-FR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                      <span className="mx-2">•</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      {item.author_fr}
                     </div>
-                    <h3 className="text-xl font-bold mb-3">{item.title[language]}</h3>
-                    <p className="text-gray-700 mb-4">{item.excerpt[language]}</p>
-                    <div className={`flex items-center ${language === 'ar' ? 'flex-row-reverse' : ''} justify-between mt-4`}>
-                      <Link href={item.slug} className="text-[#8FD694] font-medium hover:underline">
-                        {language === 'fr' ? 'Lire plus →' : '← قراءة المزيد'}
-                      </Link>
-                      <span className="text-sm text-gray-500">{item.author[language]}</span>
-                    </div>
+                    <Link 
+                      href={`/news/${item._sys.filename}`}
+                      className="text-[#171717] font-medium hover:text-[#8FD694] transition-colors flex items-center"
+                    >
+                      Lire la suite
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </Link>
                   </div>
                 </div>
               ))}

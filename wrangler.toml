@@ -6,10 +6,10 @@ entry-point = "."
 include = ["_headers", "_redirects"]
 
 [env.production]
-name = "droit-site"
+name = "droit"
 route = ""
 workers_dev = true
-compatibility_date = "2023-05-14"
+compatibility_date = "2023-12-01"
 
 [env.production.build]
 command = "npm run build"
@@ -20,4 +20,16 @@ pattern = "/*"
 script = ""
 
 # Add Pages configuration
-pages_build_output_dir = "out" 
+pages_build_output_dir = "out"
+
+# Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
+# Note: Use secrets to store sensitive data.
+# Docs: https://developers.cloudflare.com/workers/platform/environment-variables
+# [vars]
+# MY_VARIABLE = "production_value"
+
+# Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
+# Docs: https://developers.cloudflare.com/workers/runtime-apis/kv
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 

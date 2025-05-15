@@ -1,0 +1,33 @@
+fragment NewsParts on News {
+  __typename
+  title_fr
+  title_ar
+  date
+  author_fr
+  author_ar
+  category_fr
+  category_ar
+  image
+  body_fr
+  body_ar
+  excerpt_fr
+  excerpt_ar
+}
+
+fragment MissionParts on Mission {
+  __typename
+  title_fr
+  title_ar
+  description_fr
+  description_ar
+  points {
+    __typename
+    text_fr
+    text_ar
+  }
+  image
+  image_title_fr
+  image_title_ar
+  image_description_fr
+  image_description_ar
+}
