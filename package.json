@@ -7,7 +7,7 @@
     "build": "next build && mkdir -p out/admin && cp -r public/admin/* out/admin/",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npx wrangler pages deploy .next --project-name droit"
+    "deploy": "npm run build && wrangler pages deploy out --project-name droit"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.2",
