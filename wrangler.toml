@@ -3,7 +3,7 @@ bucket = "./out"
 entry-point = "."
 
 [site.static]
-include = ["_headers", "_redirects"]
+include = ["_headers", "_redirects", "_routes.json"]
 
 [env.production]
 name = "droit"
@@ -19,6 +19,11 @@ output_directory = "out"
 pattern = "/*"
 script = ""
 
+[[env.production.routes]]
+pattern = "/admin/*"
+script = ""
+custom_domain = true
+
 # Add Pages configuration
 pages_build_output_dir = "out"
 
@@ -33,3 +38,14 @@ pages_build_output_dir = "out"
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
 # id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
+
+# Custom routes for admin
+[[routes]]
+pattern = "/admin"
+script = ""
+custom_domain = true
+
+[[routes]]
+pattern = "/admin/*"
+script = ""
+custom_domain = true

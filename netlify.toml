@@ -1,0 +1,11 @@
+[build]
+  publish = "out"
+  command = "npm run build"
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+[template.environment]
+  NETLIFY_IDENTITY_SITE_URL = "https://sage-queijadas-0f917a.netlify.app" 

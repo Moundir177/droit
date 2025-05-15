@@ -7,10 +7,11 @@
     "build": "tinacms build && next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npx wrangler pages deploy .next --project-name droit"
+    "deploy": "npm run build && wrangler pages deploy out --project-name droit"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.2",
+    "decap-cms-app": "^3.6.2",
     "framer-motion": "^12.11.0",
     "next": "15.3.2",
     "react": "^19.0.0",
