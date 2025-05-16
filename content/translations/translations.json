@@ -1,0 +1,138 @@
+{
+  "fr": {
+    "navigation": {
+      "home": "Accueil",
+      "about": "À Propos",
+      "programs": "Programmes",
+      "news": "Actualités",
+      "review": "Revue",
+      "resources": "Ressources",
+      "testimonials": "Témoignages",
+      "collaborations_ong": "Collaborations ONG",
+      "gallery": "Galerie",
+      "contact": "Contact"
+    },
+    "common": {
+      "learn_more": "En Savoir Plus",
+      "read_more": "Lire Plus",
+      "view_all": "Voir Tout",
+      "back_to": "Retour à",
+      "send_message": "Envoyer Message"
+    },
+    "home": {
+      "hero_title": "Fondation pour la Promotion des Droits",
+      "hero_subtitle": "Défendre les droits et renforcer les capacités de la société civile",
+      "hero_cta": "Découvrir Nos Programmes",
+      "stats_trainings": "Formations",
+      "stats_beneficiaries": "Bénéficiaires",
+      "stats_partners": "Partenaires",
+      "our_impact": "Notre Impact",
+      "mission_title": "Notre Mission",
+      "mission_description": "Promouvoir et défendre des droits égaux et renforcer les capacités des acteurs de la société civile.",
+      "programs_title": "Nos Programmes",
+      "programs_subtitle": "À travers nos différents programmes, nous travaillons à promouvoir et protéger les droits humains.",
+      "news_title": "Dernières Actualités",
+      "news_subtitle": "Découvrez nos dernières activités et actualités"
+    },
+    "about": {
+      "title": "À Propos de Nous",
+      "subtitle": "La Fondation pour la Promotion des Droits en Algérie est dédiée au renforcement des droits égaux et au développement des capacités des acteurs de la société civile.",
+      "mission": "Notre Mission",
+      "vision": "Notre Vision",
+      "team": "Notre Équipe",
+      "history": "Notre Histoire"
+    },
+    "contact": {
+      "title": "Contactez-Nous",
+      "subtitle": "Nous accueillons vos questions et commentaires. N'hésitez pas à nous contacter.",
+      "office": "Notre Bureau",
+      "phone": "Téléphone & Fax",
+      "email": "Email & Réseaux",
+      "form_name": "Votre Nom *",
+      "form_email": "Votre Email *",
+      "form_subject": "Sujet *",
+      "form_message": "Votre Message *",
+      "form_submit": "Envoyer Message",
+      "hours": "Heures d'Ouverture",
+      "faq": "Questions Fréquentes"
+    },
+    "programs": {
+      "training": "Formation & Renforcement",
+      "advocacy": "Plaidoyer & Sensibilisation",
+      "research": "Recherche & Documentation",
+      "impact": "Impact du Programme",
+      "implementation": "Notre Approche de Mise en Œuvre",
+      "partners": "Nos Partenaires",
+      "participatory_methodology": "Méthodologie Participative",
+      "results_based": "Gestion Axée sur les Résultats"
+    }
+  },
+  "ar": {
+    "navigation": {
+      "home": "الرئيسية",
+      "about": "من نحن",
+      "programs": "البرامج",
+      "news": "الأخبار",
+      "review": "مراجعة",
+      "resources": "الموارد",
+      "testimonials": "الشهادات",
+      "collaborations_ong": "تعاون مع المنظمات",
+      "gallery": "معرض الصور",
+      "contact": "اتصل بنا"
+    },
+    "common": {
+      "learn_more": "معرفة المزيد",
+      "read_more": "قراءة المزيد",
+      "view_all": "عرض الكل",
+      "back_to": "العودة إلى",
+      "send_message": "إرسال رسالة"
+    },
+    "home": {
+      "hero_title": "مؤسسة تعزيز الحقوق",
+      "hero_subtitle": "الدفاع عن الحقوق وتعزيز قدرات المجتمع المدني",
+      "hero_cta": "اكتشف برامجنا",
+      "stats_trainings": "التدريبات",
+      "stats_beneficiaries": "المستفيدين",
+      "stats_partners": "الشركاء",
+      "our_impact": "تأثيرنا",
+      "mission_title": "مهمتنا",
+      "mission_description": "تعزيز والدفاع عن الحقوق المتساوية وبناء قدرات الفاعلين في المجتمع المدني.",
+      "programs_title": "برامجنا",
+      "programs_subtitle": "من خلال برامجنا المتنوعة، نعمل على تعزيز وحماية حقوق الإنسان.",
+      "news_title": "آخر الأخبار",
+      "news_subtitle": "اكتشف آخر أنشطتنا وأخبارنا"
+    },
+    "about": {
+      "title": "من نحن",
+      "subtitle": "مؤسسة تعزيز الحقوق في الجزائر مكرسة لتعزيز الحقوق المتساوية وبناء قدرات الفاعلين في المجتمع المدني.",
+      "mission": "مهمتنا",
+      "vision": "رؤيتنا",
+      "team": "فريقنا",
+      "history": "تاريخنا"
+    },
+    "contact": {
+      "title": "اتصل بنا",
+      "subtitle": "نرحب باستفساراتكم وملاحظاتكم. لا تترددوا في الاتصال بنا.",
+      "office": "مكتبنا",
+      "phone": "الهاتف والفاكس",
+      "email": "البريد الإلكتروني والشبكات",
+      "form_name": "اسمك *",
+      "form_email": "بريدك الإلكتروني *",
+      "form_subject": "الموضوع *",
+      "form_message": "رسالتك *",
+      "form_submit": "إرسال الرسالة",
+      "hours": "ساعات العمل",
+      "faq": "الأسئلة الشائعة"
+    },
+    "programs": {
+      "training": "التدريب وبناء القدرات",
+      "advocacy": "المناصرة والتوعية",
+      "research": "البحث والتوثيق",
+      "impact": "تأثير البرنامج",
+      "implementation": "نهج التنفيذ لدينا",
+      "partners": "شركاؤنا",
+      "participatory_methodology": "منهجية تشاركية",
+      "results_based": "الإدارة القائمة على النتائج"
+    }
+  }
+} 

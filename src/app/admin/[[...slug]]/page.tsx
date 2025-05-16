@@ -4,19 +4,42 @@ import { useEffect } from 'react';
 
 export default function AdminPage() {
   useEffect(() => {
-    // Redirect to TinaCMS admin
-    const clientId = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
-    if (clientId) {
-      // Use the direct TinaCMS app URL instead of auth flow
-      window.location.href = `https://app.tina.io/projects/${clientId}`;
-    } else {
-      console.error('TinaCMS Client ID not found. Make sure it is set in your .env.local file.');
-    }
+    // Dynamically import TinaCMS only on the client side
+    import('tinacms').then(({ TinaAdmin }) => {
+      const tinaConfig = {
+        clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID || '',
+        branch: process.env.NEXT_PUBLIC_TINA_BRANCH || 'main',
+        token: process.env.TINA_TOKEN,
+        mediaStore: {
+          loadUrlPrefix: '/images/',
+          publicFolder: 'public',
+          mediaRoot: 'images',
+        },
+      };
+
+      // Mount TinaCMS admin in a div that we create
+      const adminRoot = document.createElement('div');
+      adminRoot.id = 'tina-admin-root';
+      document.body.appendChild(adminRoot);
+
+      // Render TinaCMS admin
+      const root = require('react-dom/client').createRoot(adminRoot);
+      root.render(<TinaAdmin config={tinaConfig} />);
+
+      // Clean up loading indicator
+      const loadingIndicator = document.getElementById('tina-loading-indicator');
+      if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+      }
+    });
   }, []);
-  
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-lg">Redirecting to TinaCMS admin...</p>
+    <div 
+      id="tina-loading-indicator"
+      className="min-h-screen flex flex-col items-center justify-center"
+    >
+      <p className="text-lg mb-4">Loading TinaCMS admin...</p>
     </div>
   );
 }

@@ -1,3 +1,24 @@
+fragment PagesParts on Pages {
+  __typename
+  title_fr
+  title_ar
+  description_fr
+  description_ar
+  header_image
+  body_fr
+  body_ar
+  sections {
+    __typename
+    section_title_fr
+    section_title_ar
+    section_content_fr
+    section_content_ar
+    section_image
+    section_image_alt_fr
+    section_image_alt_ar
+  }
+}
+
 fragment NewsParts on News {
   __typename
   title_fr
@@ -30,4 +51,212 @@ fragment MissionParts on Mission {
   image_title_ar
   image_description_fr
   image_description_ar
+}
+
+fragment TranslationsParts on Translations {
+  __typename
+  fr {
+    __typename
+    navigation {
+      __typename
+      home
+      about
+      programs
+      news
+      review
+      resources
+      testimonials
+      collaborations_ong
+      gallery
+      contact
+    }
+    common {
+      __typename
+      learn_more
+      read_more
+      view_all
+      back_to
+      send_message
+    }
+    home {
+      __typename
+      hero_title
+      hero_subtitle
+      hero_cta
+      stats_trainings
+      stats_beneficiaries
+      stats_partners
+      our_impact
+      mission_title
+      mission_description
+      programs_title
+      programs_subtitle
+      news_title
+      news_subtitle
+    }
+    about {
+      __typename
+      title
+      subtitle
+      mission
+      vision
+      team
+      history
+    }
+    contact {
+      __typename
+      title
+      subtitle
+      office
+      phone
+      email
+      form_name
+      form_email
+      form_subject
+      form_message
+      form_submit
+      hours
+      faq
+    }
+    programs {
+      __typename
+      training
+      advocacy
+      research
+      impact
+      implementation
+      partners
+      participatory_methodology
+      results_based
+    }
+  }
+  ar {
+    __typename
+    navigation
+    common {
+      __typename
+      learn_more
+      read_more
+      view_all
+      back_to
+      send_message
+    }
+    home {
+      __typename
+      hero_title
+      hero_subtitle
+      hero_cta
+      stats_trainings
+      stats_beneficiaries
+      stats_partners
+      our_impact
+      mission_title
+      mission_description
+      programs_title
+      programs_subtitle
+      news_title
+      news_subtitle
+    }
+    about {
+      __typename
+      title
+      subtitle
+      mission
+      vision
+      team
+      history
+    }
+    contact {
+      __typename
+      title
+      subtitle
+      office
+      phone
+      email
+      form_name
+      form_email
+      form_subject
+      form_message
+      form_submit
+      hours
+      faq
+    }
+    programs {
+      __typename
+      training
+      advocacy
+      research
+      impact
+      implementation
+      partners
+      participatory_methodology
+      results_based
+    }
+  }
+}
+
+fragment SettingsParts on Settings {
+  __typename
+  general {
+    __typename
+    site_title_fr
+    site_title_ar
+    site_description_fr
+    site_description_ar
+    logo
+    favicon
+  }
+  contact {
+    __typename
+    address_fr
+    address_ar
+    phone
+    email
+    hours_fr
+    hours_ar
+  }
+  social {
+    __typename
+    facebook
+    twitter
+    instagram
+    linkedin
+    youtube
+  }
+  footer {
+    __typename
+    tagline_fr
+    tagline_ar
+    copyright_fr
+    copyright_ar
+  }
+  newsletter {
+    __typename
+    title_fr
+    title_ar
+    description_fr
+    description_ar
+    button_fr
+    button_ar
+    disclaimer_fr
+    disclaimer_ar
+  }
+}
+
+fragment StatsParts on Stats {
+  __typename
+  trainings_count
+  beneficiaries_count
+  partners_count
+}
+
+fragment ProgramsParts on Programs {
+  __typename
+  title_fr
+  title_ar
+  description_fr
+  description_ar
+  image
+  body_fr
+  body_ar
 }

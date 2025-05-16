@@ -7,10 +7,9 @@ export const client = createClient({
     : 'http://localhost:4001/graphql',
   token: process.env.TINA_TOKEN || '',
   queries,
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID || '',
 });
 
-export async function getMissionData() {
+export async function getMission() {
   const missionResult = await client.queries.mission({
     relativePath: "mission.json",
   });
@@ -19,7 +18,7 @@ export async function getMissionData() {
 
 export async function getNewsItems() {
   const newsResult = await client.queries.newsConnection();
-  return newsResult.data.newsConnection.edges.map((edge) => edge.node);
+  return newsResult.data.newsConnection.edges?.map((edge) => edge?.node) ?? [];
 }
 
 export async function getNewsItem(relativePath: string) {

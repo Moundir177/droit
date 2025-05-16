@@ -9,14 +9,6 @@ const nextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/admin',
-        destination: '/admin',
-      },
-    ];
-  },
 };
 
 export default nextConfig;

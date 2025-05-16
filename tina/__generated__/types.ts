@@ -82,10 +82,20 @@ export type Query = {
   collections: Array<Collection>;
   node: Node;
   document: DocumentNode;
+  pages: Pages;
+  pagesConnection: PagesConnection;
   news: News;
   newsConnection: NewsConnection;
   mission: Mission;
   missionConnection: MissionConnection;
+  translations: Translations;
+  translationsConnection: TranslationsConnection;
+  settings: Settings;
+  settingsConnection: SettingsConnection;
+  stats: Stats;
+  statsConnection: StatsConnection;
+  programs: Programs;
+  programsConnection: ProgramsConnection;
 };
 
 
@@ -107,6 +117,21 @@ export type QueryNodeArgs = {
 export type QueryDocumentArgs = {
   collection?: InputMaybe<Scalars['String']['input']>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPagesArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPagesConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PagesFilter>;
 };
 
 
@@ -139,9 +164,74 @@ export type QueryMissionConnectionArgs = {
   filter?: InputMaybe<MissionFilter>;
 };
 
+
+export type QueryTranslationsArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryTranslationsConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<TranslationsFilter>;
+};
+
+
+export type QuerySettingsArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QuerySettingsConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<SettingsFilter>;
+};
+
+
+export type QueryStatsArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryStatsConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<StatsFilter>;
+};
+
+
+export type QueryProgramsArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryProgramsConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ProgramsFilter>;
+};
+
 export type DocumentFilter = {
+  pages?: InputMaybe<PagesFilter>;
   news?: InputMaybe<NewsFilter>;
   mission?: InputMaybe<MissionFilter>;
+  translations?: InputMaybe<TranslationsFilter>;
+  settings?: InputMaybe<SettingsFilter>;
+  stats?: InputMaybe<StatsFilter>;
+  programs?: InputMaybe<ProgramsFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -181,7 +271,87 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = News | Mission | Folder;
+export type DocumentNode = Pages | News | Mission | Translations | Settings | Stats | Programs | Folder;
+
+export type PagesSections = {
+  __typename?: 'PagesSections';
+  section_title_fr?: Maybe<Scalars['String']['output']>;
+  section_title_ar?: Maybe<Scalars['String']['output']>;
+  section_content_fr?: Maybe<Scalars['JSON']['output']>;
+  section_content_ar?: Maybe<Scalars['JSON']['output']>;
+  section_image?: Maybe<Scalars['String']['output']>;
+  section_image_alt_fr?: Maybe<Scalars['String']['output']>;
+  section_image_alt_ar?: Maybe<Scalars['String']['output']>;
+};
+
+export type Pages = Node & Document & {
+  __typename?: 'Pages';
+  title_fr: Scalars['String']['output'];
+  title_ar: Scalars['String']['output'];
+  description_fr?: Maybe<Scalars['String']['output']>;
+  description_ar?: Maybe<Scalars['String']['output']>;
+  header_image?: Maybe<Scalars['String']['output']>;
+  body_fr?: Maybe<Scalars['JSON']['output']>;
+  body_ar?: Maybe<Scalars['JSON']['output']>;
+  sections?: Maybe<Array<Maybe<PagesSections>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type StringFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type RichTextFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type PagesSectionsFilter = {
+  section_title_fr?: InputMaybe<StringFilter>;
+  section_title_ar?: InputMaybe<StringFilter>;
+  section_content_fr?: InputMaybe<RichTextFilter>;
+  section_content_ar?: InputMaybe<RichTextFilter>;
+  section_image?: InputMaybe<ImageFilter>;
+  section_image_alt_fr?: InputMaybe<StringFilter>;
+  section_image_alt_ar?: InputMaybe<StringFilter>;
+};
+
+export type PagesFilter = {
+  title_fr?: InputMaybe<StringFilter>;
+  title_ar?: InputMaybe<StringFilter>;
+  description_fr?: InputMaybe<StringFilter>;
+  description_ar?: InputMaybe<StringFilter>;
+  header_image?: InputMaybe<ImageFilter>;
+  body_fr?: InputMaybe<RichTextFilter>;
+  body_ar?: InputMaybe<RichTextFilter>;
+  sections?: InputMaybe<PagesSectionsFilter>;
+};
+
+export type PagesConnectionEdges = {
+  __typename?: 'PagesConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Pages>;
+};
+
+export type PagesConnection = Connection & {
+  __typename?: 'PagesConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<PagesConnectionEdges>>>;
+};
 
 export type News = Node & Document & {
   __typename?: 'News';
@@ -202,32 +372,12 @@ export type News = Node & Document & {
   _values: Scalars['JSON']['output'];
 };
 
-export type StringFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
 export type DatetimeFilter = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   eq?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type ImageFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type RichTextFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type NewsFilter = {
@@ -312,6 +462,546 @@ export type MissionConnection = Connection & {
   edges?: Maybe<Array<Maybe<MissionConnectionEdges>>>;
 };
 
+export type TranslationsFrNavigation = {
+  __typename?: 'TranslationsFrNavigation';
+  home?: Maybe<Scalars['String']['output']>;
+  about?: Maybe<Scalars['String']['output']>;
+  programs?: Maybe<Scalars['String']['output']>;
+  news?: Maybe<Scalars['String']['output']>;
+  review?: Maybe<Scalars['String']['output']>;
+  resources?: Maybe<Scalars['String']['output']>;
+  testimonials?: Maybe<Scalars['String']['output']>;
+  collaborations_ong?: Maybe<Scalars['String']['output']>;
+  gallery?: Maybe<Scalars['String']['output']>;
+  contact?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsFrCommon = {
+  __typename?: 'TranslationsFrCommon';
+  learn_more?: Maybe<Scalars['String']['output']>;
+  read_more?: Maybe<Scalars['String']['output']>;
+  view_all?: Maybe<Scalars['String']['output']>;
+  back_to?: Maybe<Scalars['String']['output']>;
+  send_message?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsFrHome = {
+  __typename?: 'TranslationsFrHome';
+  hero_title?: Maybe<Scalars['String']['output']>;
+  hero_subtitle?: Maybe<Scalars['String']['output']>;
+  hero_cta?: Maybe<Scalars['String']['output']>;
+  stats_trainings?: Maybe<Scalars['String']['output']>;
+  stats_beneficiaries?: Maybe<Scalars['String']['output']>;
+  stats_partners?: Maybe<Scalars['String']['output']>;
+  our_impact?: Maybe<Scalars['String']['output']>;
+  mission_title?: Maybe<Scalars['String']['output']>;
+  mission_description?: Maybe<Scalars['String']['output']>;
+  programs_title?: Maybe<Scalars['String']['output']>;
+  programs_subtitle?: Maybe<Scalars['String']['output']>;
+  news_title?: Maybe<Scalars['String']['output']>;
+  news_subtitle?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsFrAbout = {
+  __typename?: 'TranslationsFrAbout';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  mission?: Maybe<Scalars['String']['output']>;
+  vision?: Maybe<Scalars['String']['output']>;
+  team?: Maybe<Scalars['String']['output']>;
+  history?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsFrContact = {
+  __typename?: 'TranslationsFrContact';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  office?: Maybe<Scalars['String']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  form_name?: Maybe<Scalars['String']['output']>;
+  form_email?: Maybe<Scalars['String']['output']>;
+  form_subject?: Maybe<Scalars['String']['output']>;
+  form_message?: Maybe<Scalars['String']['output']>;
+  form_submit?: Maybe<Scalars['String']['output']>;
+  hours?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsFrPrograms = {
+  __typename?: 'TranslationsFrPrograms';
+  training?: Maybe<Scalars['String']['output']>;
+  advocacy?: Maybe<Scalars['String']['output']>;
+  research?: Maybe<Scalars['String']['output']>;
+  impact?: Maybe<Scalars['String']['output']>;
+  implementation?: Maybe<Scalars['String']['output']>;
+  partners?: Maybe<Scalars['String']['output']>;
+  participatory_methodology?: Maybe<Scalars['String']['output']>;
+  results_based?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsFr = {
+  __typename?: 'TranslationsFr';
+  navigation?: Maybe<TranslationsFrNavigation>;
+  common?: Maybe<TranslationsFrCommon>;
+  home?: Maybe<TranslationsFrHome>;
+  about?: Maybe<TranslationsFrAbout>;
+  contact?: Maybe<TranslationsFrContact>;
+  programs?: Maybe<TranslationsFrPrograms>;
+};
+
+export type TranslationsArCommon = {
+  __typename?: 'TranslationsArCommon';
+  learn_more?: Maybe<Scalars['String']['output']>;
+  read_more?: Maybe<Scalars['String']['output']>;
+  view_all?: Maybe<Scalars['String']['output']>;
+  back_to?: Maybe<Scalars['String']['output']>;
+  send_message?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsArHome = {
+  __typename?: 'TranslationsArHome';
+  hero_title?: Maybe<Scalars['String']['output']>;
+  hero_subtitle?: Maybe<Scalars['String']['output']>;
+  hero_cta?: Maybe<Scalars['String']['output']>;
+  stats_trainings?: Maybe<Scalars['String']['output']>;
+  stats_beneficiaries?: Maybe<Scalars['String']['output']>;
+  stats_partners?: Maybe<Scalars['String']['output']>;
+  our_impact?: Maybe<Scalars['String']['output']>;
+  mission_title?: Maybe<Scalars['String']['output']>;
+  mission_description?: Maybe<Scalars['String']['output']>;
+  programs_title?: Maybe<Scalars['String']['output']>;
+  programs_subtitle?: Maybe<Scalars['String']['output']>;
+  news_title?: Maybe<Scalars['String']['output']>;
+  news_subtitle?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsArAbout = {
+  __typename?: 'TranslationsArAbout';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  mission?: Maybe<Scalars['String']['output']>;
+  vision?: Maybe<Scalars['String']['output']>;
+  team?: Maybe<Scalars['String']['output']>;
+  history?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsArContact = {
+  __typename?: 'TranslationsArContact';
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  office?: Maybe<Scalars['String']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  form_name?: Maybe<Scalars['String']['output']>;
+  form_email?: Maybe<Scalars['String']['output']>;
+  form_subject?: Maybe<Scalars['String']['output']>;
+  form_message?: Maybe<Scalars['String']['output']>;
+  form_submit?: Maybe<Scalars['String']['output']>;
+  hours?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsArPrograms = {
+  __typename?: 'TranslationsArPrograms';
+  training?: Maybe<Scalars['String']['output']>;
+  advocacy?: Maybe<Scalars['String']['output']>;
+  research?: Maybe<Scalars['String']['output']>;
+  impact?: Maybe<Scalars['String']['output']>;
+  implementation?: Maybe<Scalars['String']['output']>;
+  partners?: Maybe<Scalars['String']['output']>;
+  participatory_methodology?: Maybe<Scalars['String']['output']>;
+  results_based?: Maybe<Scalars['String']['output']>;
+};
+
+export type TranslationsAr = {
+  __typename?: 'TranslationsAr';
+  navigation?: Maybe<Scalars['String']['output']>;
+  common?: Maybe<TranslationsArCommon>;
+  home?: Maybe<TranslationsArHome>;
+  about?: Maybe<TranslationsArAbout>;
+  contact?: Maybe<TranslationsArContact>;
+  programs?: Maybe<TranslationsArPrograms>;
+};
+
+export type Translations = Node & Document & {
+  __typename?: 'Translations';
+  fr?: Maybe<TranslationsFr>;
+  ar?: Maybe<TranslationsAr>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type TranslationsFrNavigationFilter = {
+  home?: InputMaybe<StringFilter>;
+  about?: InputMaybe<StringFilter>;
+  programs?: InputMaybe<StringFilter>;
+  news?: InputMaybe<StringFilter>;
+  review?: InputMaybe<StringFilter>;
+  resources?: InputMaybe<StringFilter>;
+  testimonials?: InputMaybe<StringFilter>;
+  collaborations_ong?: InputMaybe<StringFilter>;
+  gallery?: InputMaybe<StringFilter>;
+  contact?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsFrCommonFilter = {
+  learn_more?: InputMaybe<StringFilter>;
+  read_more?: InputMaybe<StringFilter>;
+  view_all?: InputMaybe<StringFilter>;
+  back_to?: InputMaybe<StringFilter>;
+  send_message?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsFrHomeFilter = {
+  hero_title?: InputMaybe<StringFilter>;
+  hero_subtitle?: InputMaybe<StringFilter>;
+  hero_cta?: InputMaybe<StringFilter>;
+  stats_trainings?: InputMaybe<StringFilter>;
+  stats_beneficiaries?: InputMaybe<StringFilter>;
+  stats_partners?: InputMaybe<StringFilter>;
+  our_impact?: InputMaybe<StringFilter>;
+  mission_title?: InputMaybe<StringFilter>;
+  mission_description?: InputMaybe<StringFilter>;
+  programs_title?: InputMaybe<StringFilter>;
+  programs_subtitle?: InputMaybe<StringFilter>;
+  news_title?: InputMaybe<StringFilter>;
+  news_subtitle?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsFrAboutFilter = {
+  title?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  mission?: InputMaybe<StringFilter>;
+  vision?: InputMaybe<StringFilter>;
+  team?: InputMaybe<StringFilter>;
+  history?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsFrContactFilter = {
+  title?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  office?: InputMaybe<StringFilter>;
+  phone?: InputMaybe<StringFilter>;
+  email?: InputMaybe<StringFilter>;
+  form_name?: InputMaybe<StringFilter>;
+  form_email?: InputMaybe<StringFilter>;
+  form_subject?: InputMaybe<StringFilter>;
+  form_message?: InputMaybe<StringFilter>;
+  form_submit?: InputMaybe<StringFilter>;
+  hours?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsFrProgramsFilter = {
+  training?: InputMaybe<StringFilter>;
+  advocacy?: InputMaybe<StringFilter>;
+  research?: InputMaybe<StringFilter>;
+  impact?: InputMaybe<StringFilter>;
+  implementation?: InputMaybe<StringFilter>;
+  partners?: InputMaybe<StringFilter>;
+  participatory_methodology?: InputMaybe<StringFilter>;
+  results_based?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsFrFilter = {
+  navigation?: InputMaybe<TranslationsFrNavigationFilter>;
+  common?: InputMaybe<TranslationsFrCommonFilter>;
+  home?: InputMaybe<TranslationsFrHomeFilter>;
+  about?: InputMaybe<TranslationsFrAboutFilter>;
+  contact?: InputMaybe<TranslationsFrContactFilter>;
+  programs?: InputMaybe<TranslationsFrProgramsFilter>;
+};
+
+export type TranslationsArCommonFilter = {
+  learn_more?: InputMaybe<StringFilter>;
+  read_more?: InputMaybe<StringFilter>;
+  view_all?: InputMaybe<StringFilter>;
+  back_to?: InputMaybe<StringFilter>;
+  send_message?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsArHomeFilter = {
+  hero_title?: InputMaybe<StringFilter>;
+  hero_subtitle?: InputMaybe<StringFilter>;
+  hero_cta?: InputMaybe<StringFilter>;
+  stats_trainings?: InputMaybe<StringFilter>;
+  stats_beneficiaries?: InputMaybe<StringFilter>;
+  stats_partners?: InputMaybe<StringFilter>;
+  our_impact?: InputMaybe<StringFilter>;
+  mission_title?: InputMaybe<StringFilter>;
+  mission_description?: InputMaybe<StringFilter>;
+  programs_title?: InputMaybe<StringFilter>;
+  programs_subtitle?: InputMaybe<StringFilter>;
+  news_title?: InputMaybe<StringFilter>;
+  news_subtitle?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsArAboutFilter = {
+  title?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  mission?: InputMaybe<StringFilter>;
+  vision?: InputMaybe<StringFilter>;
+  team?: InputMaybe<StringFilter>;
+  history?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsArContactFilter = {
+  title?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  office?: InputMaybe<StringFilter>;
+  phone?: InputMaybe<StringFilter>;
+  email?: InputMaybe<StringFilter>;
+  form_name?: InputMaybe<StringFilter>;
+  form_email?: InputMaybe<StringFilter>;
+  form_subject?: InputMaybe<StringFilter>;
+  form_message?: InputMaybe<StringFilter>;
+  form_submit?: InputMaybe<StringFilter>;
+  hours?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsArProgramsFilter = {
+  training?: InputMaybe<StringFilter>;
+  advocacy?: InputMaybe<StringFilter>;
+  research?: InputMaybe<StringFilter>;
+  impact?: InputMaybe<StringFilter>;
+  implementation?: InputMaybe<StringFilter>;
+  partners?: InputMaybe<StringFilter>;
+  participatory_methodology?: InputMaybe<StringFilter>;
+  results_based?: InputMaybe<StringFilter>;
+};
+
+export type TranslationsArFilter = {
+  navigation?: InputMaybe<StringFilter>;
+  common?: InputMaybe<TranslationsArCommonFilter>;
+  home?: InputMaybe<TranslationsArHomeFilter>;
+  about?: InputMaybe<TranslationsArAboutFilter>;
+  contact?: InputMaybe<TranslationsArContactFilter>;
+  programs?: InputMaybe<TranslationsArProgramsFilter>;
+};
+
+export type TranslationsFilter = {
+  fr?: InputMaybe<TranslationsFrFilter>;
+  ar?: InputMaybe<TranslationsArFilter>;
+};
+
+export type TranslationsConnectionEdges = {
+  __typename?: 'TranslationsConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Translations>;
+};
+
+export type TranslationsConnection = Connection & {
+  __typename?: 'TranslationsConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<TranslationsConnectionEdges>>>;
+};
+
+export type SettingsGeneral = {
+  __typename?: 'SettingsGeneral';
+  site_title_fr?: Maybe<Scalars['String']['output']>;
+  site_title_ar?: Maybe<Scalars['String']['output']>;
+  site_description_fr?: Maybe<Scalars['String']['output']>;
+  site_description_ar?: Maybe<Scalars['String']['output']>;
+  logo?: Maybe<Scalars['String']['output']>;
+  favicon?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsContact = {
+  __typename?: 'SettingsContact';
+  address_fr?: Maybe<Scalars['String']['output']>;
+  address_ar?: Maybe<Scalars['String']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  hours_fr?: Maybe<Scalars['String']['output']>;
+  hours_ar?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsSocial = {
+  __typename?: 'SettingsSocial';
+  facebook?: Maybe<Scalars['String']['output']>;
+  twitter?: Maybe<Scalars['String']['output']>;
+  instagram?: Maybe<Scalars['String']['output']>;
+  linkedin?: Maybe<Scalars['String']['output']>;
+  youtube?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsFooter = {
+  __typename?: 'SettingsFooter';
+  tagline_fr?: Maybe<Scalars['String']['output']>;
+  tagline_ar?: Maybe<Scalars['String']['output']>;
+  copyright_fr?: Maybe<Scalars['String']['output']>;
+  copyright_ar?: Maybe<Scalars['String']['output']>;
+};
+
+export type SettingsNewsletter = {
+  __typename?: 'SettingsNewsletter';
+  title_fr?: Maybe<Scalars['String']['output']>;
+  title_ar?: Maybe<Scalars['String']['output']>;
+  description_fr?: Maybe<Scalars['String']['output']>;
+  description_ar?: Maybe<Scalars['String']['output']>;
+  button_fr?: Maybe<Scalars['String']['output']>;
+  button_ar?: Maybe<Scalars['String']['output']>;
+  disclaimer_fr?: Maybe<Scalars['String']['output']>;
+  disclaimer_ar?: Maybe<Scalars['String']['output']>;
+};
+
+export type Settings = Node & Document & {
+  __typename?: 'Settings';
+  general?: Maybe<SettingsGeneral>;
+  contact?: Maybe<SettingsContact>;
+  social?: Maybe<SettingsSocial>;
+  footer?: Maybe<SettingsFooter>;
+  newsletter?: Maybe<SettingsNewsletter>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type SettingsGeneralFilter = {
+  site_title_fr?: InputMaybe<StringFilter>;
+  site_title_ar?: InputMaybe<StringFilter>;
+  site_description_fr?: InputMaybe<StringFilter>;
+  site_description_ar?: InputMaybe<StringFilter>;
+  logo?: InputMaybe<ImageFilter>;
+  favicon?: InputMaybe<ImageFilter>;
+};
+
+export type SettingsContactFilter = {
+  address_fr?: InputMaybe<StringFilter>;
+  address_ar?: InputMaybe<StringFilter>;
+  phone?: InputMaybe<StringFilter>;
+  email?: InputMaybe<StringFilter>;
+  hours_fr?: InputMaybe<StringFilter>;
+  hours_ar?: InputMaybe<StringFilter>;
+};
+
+export type SettingsSocialFilter = {
+  facebook?: InputMaybe<StringFilter>;
+  twitter?: InputMaybe<StringFilter>;
+  instagram?: InputMaybe<StringFilter>;
+  linkedin?: InputMaybe<StringFilter>;
+  youtube?: InputMaybe<StringFilter>;
+};
+
+export type SettingsFooterFilter = {
+  tagline_fr?: InputMaybe<StringFilter>;
+  tagline_ar?: InputMaybe<StringFilter>;
+  copyright_fr?: InputMaybe<StringFilter>;
+  copyright_ar?: InputMaybe<StringFilter>;
+};
+
+export type SettingsNewsletterFilter = {
+  title_fr?: InputMaybe<StringFilter>;
+  title_ar?: InputMaybe<StringFilter>;
+  description_fr?: InputMaybe<StringFilter>;
+  description_ar?: InputMaybe<StringFilter>;
+  button_fr?: InputMaybe<StringFilter>;
+  button_ar?: InputMaybe<StringFilter>;
+  disclaimer_fr?: InputMaybe<StringFilter>;
+  disclaimer_ar?: InputMaybe<StringFilter>;
+};
+
+export type SettingsFilter = {
+  general?: InputMaybe<SettingsGeneralFilter>;
+  contact?: InputMaybe<SettingsContactFilter>;
+  social?: InputMaybe<SettingsSocialFilter>;
+  footer?: InputMaybe<SettingsFooterFilter>;
+  newsletter?: InputMaybe<SettingsNewsletterFilter>;
+};
+
+export type SettingsConnectionEdges = {
+  __typename?: 'SettingsConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Settings>;
+};
+
+export type SettingsConnection = Connection & {
+  __typename?: 'SettingsConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<SettingsConnectionEdges>>>;
+};
+
+export type Stats = Node & Document & {
+  __typename?: 'Stats';
+  trainings_count?: Maybe<Scalars['Float']['output']>;
+  beneficiaries_count?: Maybe<Scalars['Float']['output']>;
+  partners_count?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
+export type StatsFilter = {
+  trainings_count?: InputMaybe<NumberFilter>;
+  beneficiaries_count?: InputMaybe<NumberFilter>;
+  partners_count?: InputMaybe<NumberFilter>;
+};
+
+export type StatsConnectionEdges = {
+  __typename?: 'StatsConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Stats>;
+};
+
+export type StatsConnection = Connection & {
+  __typename?: 'StatsConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<StatsConnectionEdges>>>;
+};
+
+export type Programs = Node & Document & {
+  __typename?: 'Programs';
+  title_fr: Scalars['String']['output'];
+  title_ar: Scalars['String']['output'];
+  description_fr?: Maybe<Scalars['String']['output']>;
+  description_ar?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  body_fr?: Maybe<Scalars['JSON']['output']>;
+  body_ar?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type ProgramsFilter = {
+  title_fr?: InputMaybe<StringFilter>;
+  title_ar?: InputMaybe<StringFilter>;
+  description_fr?: InputMaybe<StringFilter>;
+  description_ar?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
+  body_fr?: InputMaybe<RichTextFilter>;
+  body_ar?: InputMaybe<RichTextFilter>;
+};
+
+export type ProgramsConnectionEdges = {
+  __typename?: 'ProgramsConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Programs>;
+};
+
+export type ProgramsConnection = Connection & {
+  __typename?: 'ProgramsConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<ProgramsConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -319,10 +1009,20 @@ export type Mutation = {
   deleteDocument: DocumentNode;
   createDocument: DocumentNode;
   createFolder: DocumentNode;
+  updatePages: Pages;
+  createPages: Pages;
   updateNews: News;
   createNews: News;
   updateMission: Mission;
   createMission: Mission;
+  updateTranslations: Translations;
+  createTranslations: Translations;
+  updateSettings: Settings;
+  createSettings: Settings;
+  updateStats: Stats;
+  createStats: Stats;
+  updatePrograms: Programs;
+  createPrograms: Programs;
 };
 
 
@@ -359,6 +1059,18 @@ export type MutationCreateFolderArgs = {
 };
 
 
+export type MutationUpdatePagesArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PagesMutation;
+};
+
+
+export type MutationCreatePagesArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PagesMutation;
+};
+
+
 export type MutationUpdateNewsArgs = {
   relativePath: Scalars['String']['input'];
   params: NewsMutation;
@@ -382,15 +1094,94 @@ export type MutationCreateMissionArgs = {
   params: MissionMutation;
 };
 
+
+export type MutationUpdateTranslationsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: TranslationsMutation;
+};
+
+
+export type MutationCreateTranslationsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: TranslationsMutation;
+};
+
+
+export type MutationUpdateSettingsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: SettingsMutation;
+};
+
+
+export type MutationCreateSettingsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: SettingsMutation;
+};
+
+
+export type MutationUpdateStatsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: StatsMutation;
+};
+
+
+export type MutationCreateStatsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: StatsMutation;
+};
+
+
+export type MutationUpdateProgramsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ProgramsMutation;
+};
+
+
+export type MutationCreateProgramsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ProgramsMutation;
+};
+
 export type DocumentUpdateMutation = {
+  pages?: InputMaybe<PagesMutation>;
   news?: InputMaybe<NewsMutation>;
   mission?: InputMaybe<MissionMutation>;
+  translations?: InputMaybe<TranslationsMutation>;
+  settings?: InputMaybe<SettingsMutation>;
+  stats?: InputMaybe<StatsMutation>;
+  programs?: InputMaybe<ProgramsMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DocumentMutation = {
+  pages?: InputMaybe<PagesMutation>;
   news?: InputMaybe<NewsMutation>;
   mission?: InputMaybe<MissionMutation>;
+  translations?: InputMaybe<TranslationsMutation>;
+  settings?: InputMaybe<SettingsMutation>;
+  stats?: InputMaybe<StatsMutation>;
+  programs?: InputMaybe<ProgramsMutation>;
+};
+
+export type PagesSectionsMutation = {
+  section_title_fr?: InputMaybe<Scalars['String']['input']>;
+  section_title_ar?: InputMaybe<Scalars['String']['input']>;
+  section_content_fr?: InputMaybe<Scalars['JSON']['input']>;
+  section_content_ar?: InputMaybe<Scalars['JSON']['input']>;
+  section_image?: InputMaybe<Scalars['String']['input']>;
+  section_image_alt_fr?: InputMaybe<Scalars['String']['input']>;
+  section_image_alt_ar?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagesMutation = {
+  title_fr?: InputMaybe<Scalars['String']['input']>;
+  title_ar?: InputMaybe<Scalars['String']['input']>;
+  description_fr?: InputMaybe<Scalars['String']['input']>;
+  description_ar?: InputMaybe<Scalars['String']['input']>;
+  header_image?: InputMaybe<Scalars['String']['input']>;
+  body_fr?: InputMaybe<Scalars['JSON']['input']>;
+  body_ar?: InputMaybe<Scalars['JSON']['input']>;
+  sections?: InputMaybe<Array<InputMaybe<PagesSectionsMutation>>>;
 };
 
 export type NewsMutation = {
@@ -426,9 +1217,260 @@ export type MissionMutation = {
   image_description_ar?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type TranslationsFrNavigationMutation = {
+  home?: InputMaybe<Scalars['String']['input']>;
+  about?: InputMaybe<Scalars['String']['input']>;
+  programs?: InputMaybe<Scalars['String']['input']>;
+  news?: InputMaybe<Scalars['String']['input']>;
+  review?: InputMaybe<Scalars['String']['input']>;
+  resources?: InputMaybe<Scalars['String']['input']>;
+  testimonials?: InputMaybe<Scalars['String']['input']>;
+  collaborations_ong?: InputMaybe<Scalars['String']['input']>;
+  gallery?: InputMaybe<Scalars['String']['input']>;
+  contact?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsFrCommonMutation = {
+  learn_more?: InputMaybe<Scalars['String']['input']>;
+  read_more?: InputMaybe<Scalars['String']['input']>;
+  view_all?: InputMaybe<Scalars['String']['input']>;
+  back_to?: InputMaybe<Scalars['String']['input']>;
+  send_message?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsFrHomeMutation = {
+  hero_title?: InputMaybe<Scalars['String']['input']>;
+  hero_subtitle?: InputMaybe<Scalars['String']['input']>;
+  hero_cta?: InputMaybe<Scalars['String']['input']>;
+  stats_trainings?: InputMaybe<Scalars['String']['input']>;
+  stats_beneficiaries?: InputMaybe<Scalars['String']['input']>;
+  stats_partners?: InputMaybe<Scalars['String']['input']>;
+  our_impact?: InputMaybe<Scalars['String']['input']>;
+  mission_title?: InputMaybe<Scalars['String']['input']>;
+  mission_description?: InputMaybe<Scalars['String']['input']>;
+  programs_title?: InputMaybe<Scalars['String']['input']>;
+  programs_subtitle?: InputMaybe<Scalars['String']['input']>;
+  news_title?: InputMaybe<Scalars['String']['input']>;
+  news_subtitle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsFrAboutMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  mission?: InputMaybe<Scalars['String']['input']>;
+  vision?: InputMaybe<Scalars['String']['input']>;
+  team?: InputMaybe<Scalars['String']['input']>;
+  history?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsFrContactMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  office?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  form_name?: InputMaybe<Scalars['String']['input']>;
+  form_email?: InputMaybe<Scalars['String']['input']>;
+  form_subject?: InputMaybe<Scalars['String']['input']>;
+  form_message?: InputMaybe<Scalars['String']['input']>;
+  form_submit?: InputMaybe<Scalars['String']['input']>;
+  hours?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsFrProgramsMutation = {
+  training?: InputMaybe<Scalars['String']['input']>;
+  advocacy?: InputMaybe<Scalars['String']['input']>;
+  research?: InputMaybe<Scalars['String']['input']>;
+  impact?: InputMaybe<Scalars['String']['input']>;
+  implementation?: InputMaybe<Scalars['String']['input']>;
+  partners?: InputMaybe<Scalars['String']['input']>;
+  participatory_methodology?: InputMaybe<Scalars['String']['input']>;
+  results_based?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsFrMutation = {
+  navigation?: InputMaybe<TranslationsFrNavigationMutation>;
+  common?: InputMaybe<TranslationsFrCommonMutation>;
+  home?: InputMaybe<TranslationsFrHomeMutation>;
+  about?: InputMaybe<TranslationsFrAboutMutation>;
+  contact?: InputMaybe<TranslationsFrContactMutation>;
+  programs?: InputMaybe<TranslationsFrProgramsMutation>;
+};
+
+export type TranslationsArCommonMutation = {
+  learn_more?: InputMaybe<Scalars['String']['input']>;
+  read_more?: InputMaybe<Scalars['String']['input']>;
+  view_all?: InputMaybe<Scalars['String']['input']>;
+  back_to?: InputMaybe<Scalars['String']['input']>;
+  send_message?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsArHomeMutation = {
+  hero_title?: InputMaybe<Scalars['String']['input']>;
+  hero_subtitle?: InputMaybe<Scalars['String']['input']>;
+  hero_cta?: InputMaybe<Scalars['String']['input']>;
+  stats_trainings?: InputMaybe<Scalars['String']['input']>;
+  stats_beneficiaries?: InputMaybe<Scalars['String']['input']>;
+  stats_partners?: InputMaybe<Scalars['String']['input']>;
+  our_impact?: InputMaybe<Scalars['String']['input']>;
+  mission_title?: InputMaybe<Scalars['String']['input']>;
+  mission_description?: InputMaybe<Scalars['String']['input']>;
+  programs_title?: InputMaybe<Scalars['String']['input']>;
+  programs_subtitle?: InputMaybe<Scalars['String']['input']>;
+  news_title?: InputMaybe<Scalars['String']['input']>;
+  news_subtitle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsArAboutMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  mission?: InputMaybe<Scalars['String']['input']>;
+  vision?: InputMaybe<Scalars['String']['input']>;
+  team?: InputMaybe<Scalars['String']['input']>;
+  history?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsArContactMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  office?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  form_name?: InputMaybe<Scalars['String']['input']>;
+  form_email?: InputMaybe<Scalars['String']['input']>;
+  form_subject?: InputMaybe<Scalars['String']['input']>;
+  form_message?: InputMaybe<Scalars['String']['input']>;
+  form_submit?: InputMaybe<Scalars['String']['input']>;
+  hours?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsArProgramsMutation = {
+  training?: InputMaybe<Scalars['String']['input']>;
+  advocacy?: InputMaybe<Scalars['String']['input']>;
+  research?: InputMaybe<Scalars['String']['input']>;
+  impact?: InputMaybe<Scalars['String']['input']>;
+  implementation?: InputMaybe<Scalars['String']['input']>;
+  partners?: InputMaybe<Scalars['String']['input']>;
+  participatory_methodology?: InputMaybe<Scalars['String']['input']>;
+  results_based?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TranslationsArMutation = {
+  navigation?: InputMaybe<Scalars['String']['input']>;
+  common?: InputMaybe<TranslationsArCommonMutation>;
+  home?: InputMaybe<TranslationsArHomeMutation>;
+  about?: InputMaybe<TranslationsArAboutMutation>;
+  contact?: InputMaybe<TranslationsArContactMutation>;
+  programs?: InputMaybe<TranslationsArProgramsMutation>;
+};
+
+export type TranslationsMutation = {
+  fr?: InputMaybe<TranslationsFrMutation>;
+  ar?: InputMaybe<TranslationsArMutation>;
+};
+
+export type SettingsGeneralMutation = {
+  site_title_fr?: InputMaybe<Scalars['String']['input']>;
+  site_title_ar?: InputMaybe<Scalars['String']['input']>;
+  site_description_fr?: InputMaybe<Scalars['String']['input']>;
+  site_description_ar?: InputMaybe<Scalars['String']['input']>;
+  logo?: InputMaybe<Scalars['String']['input']>;
+  favicon?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsContactMutation = {
+  address_fr?: InputMaybe<Scalars['String']['input']>;
+  address_ar?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  hours_fr?: InputMaybe<Scalars['String']['input']>;
+  hours_ar?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsSocialMutation = {
+  facebook?: InputMaybe<Scalars['String']['input']>;
+  twitter?: InputMaybe<Scalars['String']['input']>;
+  instagram?: InputMaybe<Scalars['String']['input']>;
+  linkedin?: InputMaybe<Scalars['String']['input']>;
+  youtube?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsFooterMutation = {
+  tagline_fr?: InputMaybe<Scalars['String']['input']>;
+  tagline_ar?: InputMaybe<Scalars['String']['input']>;
+  copyright_fr?: InputMaybe<Scalars['String']['input']>;
+  copyright_ar?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsNewsletterMutation = {
+  title_fr?: InputMaybe<Scalars['String']['input']>;
+  title_ar?: InputMaybe<Scalars['String']['input']>;
+  description_fr?: InputMaybe<Scalars['String']['input']>;
+  description_ar?: InputMaybe<Scalars['String']['input']>;
+  button_fr?: InputMaybe<Scalars['String']['input']>;
+  button_ar?: InputMaybe<Scalars['String']['input']>;
+  disclaimer_fr?: InputMaybe<Scalars['String']['input']>;
+  disclaimer_ar?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SettingsMutation = {
+  general?: InputMaybe<SettingsGeneralMutation>;
+  contact?: InputMaybe<SettingsContactMutation>;
+  social?: InputMaybe<SettingsSocialMutation>;
+  footer?: InputMaybe<SettingsFooterMutation>;
+  newsletter?: InputMaybe<SettingsNewsletterMutation>;
+};
+
+export type StatsMutation = {
+  trainings_count?: InputMaybe<Scalars['Float']['input']>;
+  beneficiaries_count?: InputMaybe<Scalars['Float']['input']>;
+  partners_count?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type ProgramsMutation = {
+  title_fr?: InputMaybe<Scalars['String']['input']>;
+  title_ar?: InputMaybe<Scalars['String']['input']>;
+  description_fr?: InputMaybe<Scalars['String']['input']>;
+  description_ar?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  body_fr?: InputMaybe<Scalars['JSON']['input']>;
+  body_ar?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type PagesPartsFragment = { __typename: 'Pages', title_fr: string, title_ar: string, description_fr?: string | null, description_ar?: string | null, header_image?: string | null, body_fr?: any | null, body_ar?: any | null, sections?: Array<{ __typename: 'PagesSections', section_title_fr?: string | null, section_title_ar?: string | null, section_content_fr?: any | null, section_content_ar?: any | null, section_image?: string | null, section_image_alt_fr?: string | null, section_image_alt_ar?: string | null } | null> | null };
+
 export type NewsPartsFragment = { __typename: 'News', title_fr: string, title_ar: string, date: string, author_fr?: string | null, author_ar?: string | null, category_fr?: string | null, category_ar?: string | null, image?: string | null, body_fr?: any | null, body_ar?: any | null, excerpt_fr?: string | null, excerpt_ar?: string | null };
 
 export type MissionPartsFragment = { __typename: 'Mission', title_fr?: string | null, title_ar?: string | null, description_fr?: string | null, description_ar?: string | null, image?: string | null, image_title_fr?: string | null, image_title_ar?: string | null, image_description_fr?: string | null, image_description_ar?: string | null, points?: Array<{ __typename: 'MissionPoints', text_fr?: string | null, text_ar?: string | null } | null> | null };
+
+export type TranslationsPartsFragment = { __typename: 'Translations', fr?: { __typename: 'TranslationsFr', navigation?: { __typename: 'TranslationsFrNavigation', home?: string | null, about?: string | null, programs?: string | null, news?: string | null, review?: string | null, resources?: string | null, testimonials?: string | null, collaborations_ong?: string | null, gallery?: string | null, contact?: string | null } | null, common?: { __typename: 'TranslationsFrCommon', learn_more?: string | null, read_more?: string | null, view_all?: string | null, back_to?: string | null, send_message?: string | null } | null, home?: { __typename: 'TranslationsFrHome', hero_title?: string | null, hero_subtitle?: string | null, hero_cta?: string | null, stats_trainings?: string | null, stats_beneficiaries?: string | null, stats_partners?: string | null, our_impact?: string | null, mission_title?: string | null, mission_description?: string | null, programs_title?: string | null, programs_subtitle?: string | null, news_title?: string | null, news_subtitle?: string | null } | null, about?: { __typename: 'TranslationsFrAbout', title?: string | null, subtitle?: string | null, mission?: string | null, vision?: string | null, team?: string | null, history?: string | null } | null, contact?: { __typename: 'TranslationsFrContact', title?: string | null, subtitle?: string | null, office?: string | null, phone?: string | null, email?: string | null, form_name?: string | null, form_email?: string | null, form_subject?: string | null, form_message?: string | null, form_submit?: string | null, hours?: string | null, faq?: string | null } | null, programs?: { __typename: 'TranslationsFrPrograms', training?: string | null, advocacy?: string | null, research?: string | null, impact?: string | null, implementation?: string | null, partners?: string | null, participatory_methodology?: string | null, results_based?: string | null } | null } | null, ar?: { __typename: 'TranslationsAr', navigation?: string | null, common?: { __typename: 'TranslationsArCommon', learn_more?: string | null, read_more?: string | null, view_all?: string | null, back_to?: string | null, send_message?: string | null } | null, home?: { __typename: 'TranslationsArHome', hero_title?: string | null, hero_subtitle?: string | null, hero_cta?: string | null, stats_trainings?: string | null, stats_beneficiaries?: string | null, stats_partners?: string | null, our_impact?: string | null, mission_title?: string | null, mission_description?: string | null, programs_title?: string | null, programs_subtitle?: string | null, news_title?: string | null, news_subtitle?: string | null } | null, about?: { __typename: 'TranslationsArAbout', title?: string | null, subtitle?: string | null, mission?: string | null, vision?: string | null, team?: string | null, history?: string | null } | null, contact?: { __typename: 'TranslationsArContact', title?: string | null, subtitle?: string | null, office?: string | null, phone?: string | null, email?: string | null, form_name?: string | null, form_email?: string | null, form_subject?: string | null, form_message?: string | null, form_submit?: string | null, hours?: string | null, faq?: string | null } | null, programs?: { __typename: 'TranslationsArPrograms', training?: string | null, advocacy?: string | null, research?: string | null, impact?: string | null, implementation?: string | null, partners?: string | null, participatory_methodology?: string | null, results_based?: string | null } | null } | null };
+
+export type SettingsPartsFragment = { __typename: 'Settings', general?: { __typename: 'SettingsGeneral', site_title_fr?: string | null, site_title_ar?: string | null, site_description_fr?: string | null, site_description_ar?: string | null, logo?: string | null, favicon?: string | null } | null, contact?: { __typename: 'SettingsContact', address_fr?: string | null, address_ar?: string | null, phone?: string | null, email?: string | null, hours_fr?: string | null, hours_ar?: string | null } | null, social?: { __typename: 'SettingsSocial', facebook?: string | null, twitter?: string | null, instagram?: string | null, linkedin?: string | null, youtube?: string | null } | null, footer?: { __typename: 'SettingsFooter', tagline_fr?: string | null, tagline_ar?: string | null, copyright_fr?: string | null, copyright_ar?: string | null } | null, newsletter?: { __typename: 'SettingsNewsletter', title_fr?: string | null, title_ar?: string | null, description_fr?: string | null, description_ar?: string | null, button_fr?: string | null, button_ar?: string | null, disclaimer_fr?: string | null, disclaimer_ar?: string | null } | null };
+
+export type StatsPartsFragment = { __typename: 'Stats', trainings_count?: number | null, beneficiaries_count?: number | null, partners_count?: number | null };
+
+export type ProgramsPartsFragment = { __typename: 'Programs', title_fr: string, title_ar: string, description_fr?: string | null, description_ar?: string | null, image?: string | null, body_fr?: any | null, body_ar?: any | null };
+
+export type PagesQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type PagesQuery = { __typename?: 'Query', pages: { __typename: 'Pages', id: string, title_fr: string, title_ar: string, description_fr?: string | null, description_ar?: string | null, header_image?: string | null, body_fr?: any | null, body_ar?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sections?: Array<{ __typename: 'PagesSections', section_title_fr?: string | null, section_title_ar?: string | null, section_content_fr?: any | null, section_content_ar?: any | null, section_image?: string | null, section_image_alt_fr?: string | null, section_image_alt_ar?: string | null } | null> | null } };
+
+export type PagesConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PagesFilter>;
+}>;
+
+
+export type PagesConnectionQuery = { __typename?: 'Query', pagesConnection: { __typename?: 'PagesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PagesConnectionEdges', cursor: string, node?: { __typename: 'Pages', id: string, title_fr: string, title_ar: string, description_fr?: string | null, description_ar?: string | null, header_image?: string | null, body_fr?: any | null, body_ar?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sections?: Array<{ __typename: 'PagesSections', section_title_fr?: string | null, section_title_ar?: string | null, section_content_fr?: any | null, section_content_ar?: any | null, section_image?: string | null, section_image_alt_fr?: string | null, section_image_alt_ar?: string | null } | null> | null } | null } | null> | null } };
 
 export type NewsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -468,6 +1510,104 @@ export type MissionConnectionQueryVariables = Exact<{
 
 export type MissionConnectionQuery = { __typename?: 'Query', missionConnection: { __typename?: 'MissionConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'MissionConnectionEdges', cursor: string, node?: { __typename: 'Mission', id: string, title_fr?: string | null, title_ar?: string | null, description_fr?: string | null, description_ar?: string | null, image?: string | null, image_title_fr?: string | null, image_title_ar?: string | null, image_description_fr?: string | null, image_description_ar?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, points?: Array<{ __typename: 'MissionPoints', text_fr?: string | null, text_ar?: string | null } | null> | null } | null } | null> | null } };
 
+export type TranslationsQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type TranslationsQuery = { __typename?: 'Query', translations: { __typename: 'Translations', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fr?: { __typename: 'TranslationsFr', navigation?: { __typename: 'TranslationsFrNavigation', home?: string | null, about?: string | null, programs?: string | null, news?: string | null, review?: string | null, resources?: string | null, testimonials?: string | null, collaborations_ong?: string | null, gallery?: string | null, contact?: string | null } | null, common?: { __typename: 'TranslationsFrCommon', learn_more?: string | null, read_more?: string | null, view_all?: string | null, back_to?: string | null, send_message?: string | null } | null, home?: { __typename: 'TranslationsFrHome', hero_title?: string | null, hero_subtitle?: string | null, hero_cta?: string | null, stats_trainings?: string | null, stats_beneficiaries?: string | null, stats_partners?: string | null, our_impact?: string | null, mission_title?: string | null, mission_description?: string | null, programs_title?: string | null, programs_subtitle?: string | null, news_title?: string | null, news_subtitle?: string | null } | null, about?: { __typename: 'TranslationsFrAbout', title?: string | null, subtitle?: string | null, mission?: string | null, vision?: string | null, team?: string | null, history?: string | null } | null, contact?: { __typename: 'TranslationsFrContact', title?: string | null, subtitle?: string | null, office?: string | null, phone?: string | null, email?: string | null, form_name?: string | null, form_email?: string | null, form_subject?: string | null, form_message?: string | null, form_submit?: string | null, hours?: string | null, faq?: string | null } | null, programs?: { __typename: 'TranslationsFrPrograms', training?: string | null, advocacy?: string | null, research?: string | null, impact?: string | null, implementation?: string | null, partners?: string | null, participatory_methodology?: string | null, results_based?: string | null } | null } | null, ar?: { __typename: 'TranslationsAr', navigation?: string | null, common?: { __typename: 'TranslationsArCommon', learn_more?: string | null, read_more?: string | null, view_all?: string | null, back_to?: string | null, send_message?: string | null } | null, home?: { __typename: 'TranslationsArHome', hero_title?: string | null, hero_subtitle?: string | null, hero_cta?: string | null, stats_trainings?: string | null, stats_beneficiaries?: string | null, stats_partners?: string | null, our_impact?: string | null, mission_title?: string | null, mission_description?: string | null, programs_title?: string | null, programs_subtitle?: string | null, news_title?: string | null, news_subtitle?: string | null } | null, about?: { __typename: 'TranslationsArAbout', title?: string | null, subtitle?: string | null, mission?: string | null, vision?: string | null, team?: string | null, history?: string | null } | null, contact?: { __typename: 'TranslationsArContact', title?: string | null, subtitle?: string | null, office?: string | null, phone?: string | null, email?: string | null, form_name?: string | null, form_email?: string | null, form_subject?: string | null, form_message?: string | null, form_submit?: string | null, hours?: string | null, faq?: string | null } | null, programs?: { __typename: 'TranslationsArPrograms', training?: string | null, advocacy?: string | null, research?: string | null, impact?: string | null, implementation?: string | null, partners?: string | null, participatory_methodology?: string | null, results_based?: string | null } | null } | null } };
+
+export type TranslationsConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<TranslationsFilter>;
+}>;
+
+
+export type TranslationsConnectionQuery = { __typename?: 'Query', translationsConnection: { __typename?: 'TranslationsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'TranslationsConnectionEdges', cursor: string, node?: { __typename: 'Translations', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fr?: { __typename: 'TranslationsFr', navigation?: { __typename: 'TranslationsFrNavigation', home?: string | null, about?: string | null, programs?: string | null, news?: string | null, review?: string | null, resources?: string | null, testimonials?: string | null, collaborations_ong?: string | null, gallery?: string | null, contact?: string | null } | null, common?: { __typename: 'TranslationsFrCommon', learn_more?: string | null, read_more?: string | null, view_all?: string | null, back_to?: string | null, send_message?: string | null } | null, home?: { __typename: 'TranslationsFrHome', hero_title?: string | null, hero_subtitle?: string | null, hero_cta?: string | null, stats_trainings?: string | null, stats_beneficiaries?: string | null, stats_partners?: string | null, our_impact?: string | null, mission_title?: string | null, mission_description?: string | null, programs_title?: string | null, programs_subtitle?: string | null, news_title?: string | null, news_subtitle?: string | null } | null, about?: { __typename: 'TranslationsFrAbout', title?: string | null, subtitle?: string | null, mission?: string | null, vision?: string | null, team?: string | null, history?: string | null } | null, contact?: { __typename: 'TranslationsFrContact', title?: string | null, subtitle?: string | null, office?: string | null, phone?: string | null, email?: string | null, form_name?: string | null, form_email?: string | null, form_subject?: string | null, form_message?: string | null, form_submit?: string | null, hours?: string | null, faq?: string | null } | null, programs?: { __typename: 'TranslationsFrPrograms', training?: string | null, advocacy?: string | null, research?: string | null, impact?: string | null, implementation?: string | null, partners?: string | null, participatory_methodology?: string | null, results_based?: string | null } | null } | null, ar?: { __typename: 'TranslationsAr', navigation?: string | null, common?: { __typename: 'TranslationsArCommon', learn_more?: string | null, read_more?: string | null, view_all?: string | null, back_to?: string | null, send_message?: string | null } | null, home?: { __typename: 'TranslationsArHome', hero_title?: string | null, hero_subtitle?: string | null, hero_cta?: string | null, stats_trainings?: string | null, stats_beneficiaries?: string | null, stats_partners?: string | null, our_impact?: string | null, mission_title?: string | null, mission_description?: string | null, programs_title?: string | null, programs_subtitle?: string | null, news_title?: string | null, news_subtitle?: string | null } | null, about?: { __typename: 'TranslationsArAbout', title?: string | null, subtitle?: string | null, mission?: string | null, vision?: string | null, team?: string | null, history?: string | null } | null, contact?: { __typename: 'TranslationsArContact', title?: string | null, subtitle?: string | null, office?: string | null, phone?: string | null, email?: string | null, form_name?: string | null, form_email?: string | null, form_subject?: string | null, form_message?: string | null, form_submit?: string | null, hours?: string | null, faq?: string | null } | null, programs?: { __typename: 'TranslationsArPrograms', training?: string | null, advocacy?: string | null, research?: string | null, impact?: string | null, implementation?: string | null, partners?: string | null, participatory_methodology?: string | null, results_based?: string | null } | null } | null } | null } | null> | null } };
+
+export type SettingsQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type SettingsQuery = { __typename?: 'Query', settings: { __typename: 'Settings', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, general?: { __typename: 'SettingsGeneral', site_title_fr?: string | null, site_title_ar?: string | null, site_description_fr?: string | null, site_description_ar?: string | null, logo?: string | null, favicon?: string | null } | null, contact?: { __typename: 'SettingsContact', address_fr?: string | null, address_ar?: string | null, phone?: string | null, email?: string | null, hours_fr?: string | null, hours_ar?: string | null } | null, social?: { __typename: 'SettingsSocial', facebook?: string | null, twitter?: string | null, instagram?: string | null, linkedin?: string | null, youtube?: string | null } | null, footer?: { __typename: 'SettingsFooter', tagline_fr?: string | null, tagline_ar?: string | null, copyright_fr?: string | null, copyright_ar?: string | null } | null, newsletter?: { __typename: 'SettingsNewsletter', title_fr?: string | null, title_ar?: string | null, description_fr?: string | null, description_ar?: string | null, button_fr?: string | null, button_ar?: string | null, disclaimer_fr?: string | null, disclaimer_ar?: string | null } | null } };
+
+export type SettingsConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<SettingsFilter>;
+}>;
+
+
+export type SettingsConnectionQuery = { __typename?: 'Query', settingsConnection: { __typename?: 'SettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SettingsConnectionEdges', cursor: string, node?: { __typename: 'Settings', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, general?: { __typename: 'SettingsGeneral', site_title_fr?: string | null, site_title_ar?: string | null, site_description_fr?: string | null, site_description_ar?: string | null, logo?: string | null, favicon?: string | null } | null, contact?: { __typename: 'SettingsContact', address_fr?: string | null, address_ar?: string | null, phone?: string | null, email?: string | null, hours_fr?: string | null, hours_ar?: string | null } | null, social?: { __typename: 'SettingsSocial', facebook?: string | null, twitter?: string | null, instagram?: string | null, linkedin?: string | null, youtube?: string | null } | null, footer?: { __typename: 'SettingsFooter', tagline_fr?: string | null, tagline_ar?: string | null, copyright_fr?: string | null, copyright_ar?: string | null } | null, newsletter?: { __typename: 'SettingsNewsletter', title_fr?: string | null, title_ar?: string | null, description_fr?: string | null, description_ar?: string | null, button_fr?: string | null, button_ar?: string | null, disclaimer_fr?: string | null, disclaimer_ar?: string | null } | null } | null } | null> | null } };
+
+export type StatsQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type StatsQuery = { __typename?: 'Query', stats: { __typename: 'Stats', id: string, trainings_count?: number | null, beneficiaries_count?: number | null, partners_count?: number | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type StatsConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<StatsFilter>;
+}>;
+
+
+export type StatsConnectionQuery = { __typename?: 'Query', statsConnection: { __typename?: 'StatsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'StatsConnectionEdges', cursor: string, node?: { __typename: 'Stats', id: string, trainings_count?: number | null, beneficiaries_count?: number | null, partners_count?: number | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type ProgramsQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type ProgramsQuery = { __typename?: 'Query', programs: { __typename: 'Programs', id: string, title_fr: string, title_ar: string, description_fr?: string | null, description_ar?: string | null, image?: string | null, body_fr?: any | null, body_ar?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type ProgramsConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ProgramsFilter>;
+}>;
+
+
+export type ProgramsConnectionQuery = { __typename?: 'Query', programsConnection: { __typename?: 'ProgramsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ProgramsConnectionEdges', cursor: string, node?: { __typename: 'Programs', id: string, title_fr: string, title_ar: string, description_fr?: string | null, description_ar?: string | null, image?: string | null, body_fr?: any | null, body_ar?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export const PagesPartsFragmentDoc = gql`
+    fragment PagesParts on Pages {
+  __typename
+  title_fr
+  title_ar
+  description_fr
+  description_ar
+  header_image
+  body_fr
+  body_ar
+  sections {
+    __typename
+    section_title_fr
+    section_title_ar
+    section_content_fr
+    section_content_ar
+    section_image
+    section_image_alt_fr
+    section_image_alt_ar
+  }
+}
+    `;
 export const NewsPartsFragmentDoc = gql`
     fragment NewsParts on News {
   __typename
@@ -504,6 +1644,275 @@ export const MissionPartsFragmentDoc = gql`
   image_description_ar
 }
     `;
+export const TranslationsPartsFragmentDoc = gql`
+    fragment TranslationsParts on Translations {
+  __typename
+  fr {
+    __typename
+    navigation {
+      __typename
+      home
+      about
+      programs
+      news
+      review
+      resources
+      testimonials
+      collaborations_ong
+      gallery
+      contact
+    }
+    common {
+      __typename
+      learn_more
+      read_more
+      view_all
+      back_to
+      send_message
+    }
+    home {
+      __typename
+      hero_title
+      hero_subtitle
+      hero_cta
+      stats_trainings
+      stats_beneficiaries
+      stats_partners
+      our_impact
+      mission_title
+      mission_description
+      programs_title
+      programs_subtitle
+      news_title
+      news_subtitle
+    }
+    about {
+      __typename
+      title
+      subtitle
+      mission
+      vision
+      team
+      history
+    }
+    contact {
+      __typename
+      title
+      subtitle
+      office
+      phone
+      email
+      form_name
+      form_email
+      form_subject
+      form_message
+      form_submit
+      hours
+      faq
+    }
+    programs {
+      __typename
+      training
+      advocacy
+      research
+      impact
+      implementation
+      partners
+      participatory_methodology
+      results_based
+    }
+  }
+  ar {
+    __typename
+    navigation
+    common {
+      __typename
+      learn_more
+      read_more
+      view_all
+      back_to
+      send_message
+    }
+    home {
+      __typename
+      hero_title
+      hero_subtitle
+      hero_cta
+      stats_trainings
+      stats_beneficiaries
+      stats_partners
+      our_impact
+      mission_title
+      mission_description
+      programs_title
+      programs_subtitle
+      news_title
+      news_subtitle
+    }
+    about {
+      __typename
+      title
+      subtitle
+      mission
+      vision
+      team
+      history
+    }
+    contact {
+      __typename
+      title
+      subtitle
+      office
+      phone
+      email
+      form_name
+      form_email
+      form_subject
+      form_message
+      form_submit
+      hours
+      faq
+    }
+    programs {
+      __typename
+      training
+      advocacy
+      research
+      impact
+      implementation
+      partners
+      participatory_methodology
+      results_based
+    }
+  }
+}
+    `;
+export const SettingsPartsFragmentDoc = gql`
+    fragment SettingsParts on Settings {
+  __typename
+  general {
+    __typename
+    site_title_fr
+    site_title_ar
+    site_description_fr
+    site_description_ar
+    logo
+    favicon
+  }
+  contact {
+    __typename
+    address_fr
+    address_ar
+    phone
+    email
+    hours_fr
+    hours_ar
+  }
+  social {
+    __typename
+    facebook
+    twitter
+    instagram
+    linkedin
+    youtube
+  }
+  footer {
+    __typename
+    tagline_fr
+    tagline_ar
+    copyright_fr
+    copyright_ar
+  }
+  newsletter {
+    __typename
+    title_fr
+    title_ar
+    description_fr
+    description_ar
+    button_fr
+    button_ar
+    disclaimer_fr
+    disclaimer_ar
+  }
+}
+    `;
+export const StatsPartsFragmentDoc = gql`
+    fragment StatsParts on Stats {
+  __typename
+  trainings_count
+  beneficiaries_count
+  partners_count
+}
+    `;
+export const ProgramsPartsFragmentDoc = gql`
+    fragment ProgramsParts on Programs {
+  __typename
+  title_fr
+  title_ar
+  description_fr
+  description_ar
+  image
+  body_fr
+  body_ar
+}
+    `;
+export const PagesDocument = gql`
+    query pages($relativePath: String!) {
+  pages(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PagesParts
+  }
+}
+    ${PagesPartsFragmentDoc}`;
+export const PagesConnectionDocument = gql`
+    query pagesConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PagesFilter) {
+  pagesConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PagesParts
+      }
+    }
+  }
+}
+    ${PagesPartsFragmentDoc}`;
 export const NewsDocument = gql`
     query news($relativePath: String!) {
   news(relativePath: $relativePath) {
@@ -618,10 +2027,244 @@ export const MissionConnectionDocument = gql`
   }
 }
     ${MissionPartsFragmentDoc}`;
+export const TranslationsDocument = gql`
+    query translations($relativePath: String!) {
+  translations(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...TranslationsParts
+  }
+}
+    ${TranslationsPartsFragmentDoc}`;
+export const TranslationsConnectionDocument = gql`
+    query translationsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: TranslationsFilter) {
+  translationsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...TranslationsParts
+      }
+    }
+  }
+}
+    ${TranslationsPartsFragmentDoc}`;
+export const SettingsDocument = gql`
+    query settings($relativePath: String!) {
+  settings(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...SettingsParts
+  }
+}
+    ${SettingsPartsFragmentDoc}`;
+export const SettingsConnectionDocument = gql`
+    query settingsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: SettingsFilter) {
+  settingsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...SettingsParts
+      }
+    }
+  }
+}
+    ${SettingsPartsFragmentDoc}`;
+export const StatsDocument = gql`
+    query stats($relativePath: String!) {
+  stats(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...StatsParts
+  }
+}
+    ${StatsPartsFragmentDoc}`;
+export const StatsConnectionDocument = gql`
+    query statsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: StatsFilter) {
+  statsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...StatsParts
+      }
+    }
+  }
+}
+    ${StatsPartsFragmentDoc}`;
+export const ProgramsDocument = gql`
+    query programs($relativePath: String!) {
+  programs(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...ProgramsParts
+  }
+}
+    ${ProgramsPartsFragmentDoc}`;
+export const ProgramsConnectionDocument = gql`
+    query programsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ProgramsFilter) {
+  programsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...ProgramsParts
+      }
+    }
+  }
+}
+    ${ProgramsPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      news(variables: NewsQueryVariables, options?: C): Promise<{data: NewsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsQueryVariables, query: string}> {
+      pages(variables: PagesQueryVariables, options?: C): Promise<{data: PagesQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PagesQueryVariables, query: string}> {
+        return requester<{data: PagesQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PagesQueryVariables, query: string}, PagesQueryVariables>(PagesDocument, variables, options);
+      },
+    pagesConnection(variables?: PagesConnectionQueryVariables, options?: C): Promise<{data: PagesConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PagesConnectionQueryVariables, query: string}> {
+        return requester<{data: PagesConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PagesConnectionQueryVariables, query: string}, PagesConnectionQueryVariables>(PagesConnectionDocument, variables, options);
+      },
+    news(variables: NewsQueryVariables, options?: C): Promise<{data: NewsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsQueryVariables, query: string}> {
         return requester<{data: NewsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsQueryVariables, query: string}, NewsQueryVariables>(NewsDocument, variables, options);
       },
     newsConnection(variables?: NewsConnectionQueryVariables, options?: C): Promise<{data: NewsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsConnectionQueryVariables, query: string}> {
@@ -632,6 +2275,30 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     missionConnection(variables?: MissionConnectionQueryVariables, options?: C): Promise<{data: MissionConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MissionConnectionQueryVariables, query: string}> {
         return requester<{data: MissionConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MissionConnectionQueryVariables, query: string}, MissionConnectionQueryVariables>(MissionConnectionDocument, variables, options);
+      },
+    translations(variables: TranslationsQueryVariables, options?: C): Promise<{data: TranslationsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TranslationsQueryVariables, query: string}> {
+        return requester<{data: TranslationsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TranslationsQueryVariables, query: string}, TranslationsQueryVariables>(TranslationsDocument, variables, options);
+      },
+    translationsConnection(variables?: TranslationsConnectionQueryVariables, options?: C): Promise<{data: TranslationsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TranslationsConnectionQueryVariables, query: string}> {
+        return requester<{data: TranslationsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: TranslationsConnectionQueryVariables, query: string}, TranslationsConnectionQueryVariables>(TranslationsConnectionDocument, variables, options);
+      },
+    settings(variables: SettingsQueryVariables, options?: C): Promise<{data: SettingsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SettingsQueryVariables, query: string}> {
+        return requester<{data: SettingsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SettingsQueryVariables, query: string}, SettingsQueryVariables>(SettingsDocument, variables, options);
+      },
+    settingsConnection(variables?: SettingsConnectionQueryVariables, options?: C): Promise<{data: SettingsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SettingsConnectionQueryVariables, query: string}> {
+        return requester<{data: SettingsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SettingsConnectionQueryVariables, query: string}, SettingsConnectionQueryVariables>(SettingsConnectionDocument, variables, options);
+      },
+    stats(variables: StatsQueryVariables, options?: C): Promise<{data: StatsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: StatsQueryVariables, query: string}> {
+        return requester<{data: StatsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: StatsQueryVariables, query: string}, StatsQueryVariables>(StatsDocument, variables, options);
+      },
+    statsConnection(variables?: StatsConnectionQueryVariables, options?: C): Promise<{data: StatsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: StatsConnectionQueryVariables, query: string}> {
+        return requester<{data: StatsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: StatsConnectionQueryVariables, query: string}, StatsConnectionQueryVariables>(StatsConnectionDocument, variables, options);
+      },
+    programs(variables: ProgramsQueryVariables, options?: C): Promise<{data: ProgramsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProgramsQueryVariables, query: string}> {
+        return requester<{data: ProgramsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProgramsQueryVariables, query: string}, ProgramsQueryVariables>(ProgramsDocument, variables, options);
+      },
+    programsConnection(variables?: ProgramsConnectionQueryVariables, options?: C): Promise<{data: ProgramsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProgramsConnectionQueryVariables, query: string}> {
+        return requester<{data: ProgramsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProgramsConnectionQueryVariables, query: string}, ProgramsConnectionQueryVariables>(ProgramsConnectionDocument, variables, options);
       }
     };
   }

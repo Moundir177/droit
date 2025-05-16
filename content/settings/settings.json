@@ -1,0 +1,41 @@
+{
+  "general": {
+    "site_title_fr": "Fondation pour la Promotion des Droits",
+    "site_title_ar": "مؤسسة تعزيز الحقوق",
+    "site_description_fr": "La Fondation pour la Promotion des Droits en Algérie est dédiée au renforcement des droits égaux et au développement des capacités des acteurs de la société civile.",
+    "site_description_ar": "مؤسسة تعزيز الحقوق في الجزائر مكرسة لتعزيز الحقوق المتساوية وبناء قدرات الفاعلين في المجتمع المدني.",
+    "logo": "/images/logo.png",
+    "favicon": "/images/favicon.ico"
+  },
+  "contact": {
+    "address_fr": "Alger, Algérie",
+    "address_ar": "الجزائر العاصمة، الجزائر",
+    "phone": "+213 21 00 00 00",
+    "email": "info@fpra-droits.org",
+    "hours_fr": "Lundi - Vendredi: 9h00 - 17h00",
+    "hours_ar": "الاثنين - الجمعة: 9:00 - 17:00"
+  },
+  "social": {
+    "facebook": "#",
+    "twitter": "#",
+    "instagram": "#",
+    "linkedin": "#",
+    "youtube": "#"
+  },
+  "footer": {
+    "tagline_fr": "Ensemble, pour des droits connus, reconnus et défendus.",
+    "tagline_ar": "معاً، من أجل حقوق معروفة، معترف بها ومدافع عنها.",
+    "copyright_fr": "Fondation pour la Promotion des Droits. Tous droits réservés.",
+    "copyright_ar": "مؤسسة تعزيز الحقوق. جميع الحقوق محفوظة."
+  },
+  "newsletter": {
+    "title_fr": "Abonnez-vous à notre newsletter",
+    "title_ar": "اشترك في نشرتنا الإخبارية",
+    "description_fr": "Recevez les dernières actualités, publications et événements directement dans votre boîte mail.",
+    "description_ar": "احصل على آخر الأخبار والمنشورات والفعاليات مباشرة في بريدك الإلكتروني.",
+    "button_fr": "S'abonner",
+    "button_ar": "اشترك",
+    "disclaimer_fr": "En vous abonnant, vous acceptez de recevoir nos emails. Vous pouvez vous désabonner à tout moment.",
+    "disclaimer_ar": "بالاشتراك، أنت توافق على تلقي رسائلنا الإلكترونية. يمكنك إلغاء الاشتراك في أي وقت."
+  }
+} 

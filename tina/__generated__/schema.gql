@@ -54,15 +54,30 @@ type Query {
   collections: [Collection!]!
   node(id: String): Node!
   document(collection: String, relativePath: String): DocumentNode!
+  pages(relativePath: String): Pages!
+  pagesConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PagesFilter): PagesConnection!
   news(relativePath: String): News!
   newsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: NewsFilter): NewsConnection!
   mission(relativePath: String): Mission!
   missionConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: MissionFilter): MissionConnection!
+  translations(relativePath: String): Translations!
+  translationsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: TranslationsFilter): TranslationsConnection!
+  settings(relativePath: String): Settings!
+  settingsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SettingsFilter): SettingsConnection!
+  stats(relativePath: String): Stats!
+  statsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: StatsFilter): StatsConnection!
+  programs(relativePath: String): Programs!
+  programsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ProgramsFilter): ProgramsConnection!
 }
 
 input DocumentFilter {
+  pages: PagesFilter
   news: NewsFilter
   mission: MissionFilter
+  translations: TranslationsFilter
+  settings: SettingsFilter
+  stats: StatsFilter
+  programs: ProgramsFilter
 }
 
 type DocumentConnectionEdges {
@@ -88,7 +103,83 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = News | Mission | Folder
+union DocumentNode = Pages | News | Mission | Translations | Settings | Stats | Programs | Folder
+
+type PagesSections {
+  section_title_fr: String
+  section_title_ar: String
+  section_content_fr: JSON
+  section_content_ar: JSON
+  section_image: String
+  section_image_alt_fr: String
+  section_image_alt_ar: String
+}
+
+type Pages implements Node & Document {
+  title_fr: String!
+  title_ar: String!
+  description_fr: String
+  description_ar: String
+  header_image: String
+  body_fr: JSON
+  body_ar: JSON
+  sections: [PagesSections]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input StringFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input RichTextFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+}
+
+input PagesSectionsFilter {
+  section_title_fr: StringFilter
+  section_title_ar: StringFilter
+  section_content_fr: RichTextFilter
+  section_content_ar: RichTextFilter
+  section_image: ImageFilter
+  section_image_alt_fr: StringFilter
+  section_image_alt_ar: StringFilter
+}
+
+input PagesFilter {
+  title_fr: StringFilter
+  title_ar: StringFilter
+  description_fr: StringFilter
+  description_ar: StringFilter
+  header_image: ImageFilter
+  body_fr: RichTextFilter
+  body_ar: RichTextFilter
+  sections: PagesSectionsFilter
+}
+
+type PagesConnectionEdges {
+  cursor: String!
+  node: Pages
+}
+
+type PagesConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [PagesConnectionEdges]
+}
 
 type News implements Node & Document {
   title_fr: String!
@@ -108,32 +199,12 @@ type News implements Node & Document {
   _values: JSON!
 }
 
-input StringFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
-}
-
 input DatetimeFilter {
   after: String
   before: String
   eq: String
   exists: Boolean
   in: [String]
-}
-
-input ImageFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
-}
-
-input RichTextFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
 }
 
 input NewsFilter {
@@ -212,27 +283,578 @@ type MissionConnection implements Connection {
   edges: [MissionConnectionEdges]
 }
 
+type TranslationsFrNavigation {
+  home: String
+  about: String
+  programs: String
+  news: String
+  review: String
+  resources: String
+  testimonials: String
+  collaborations_ong: String
+  gallery: String
+  contact: String
+}
+
+type TranslationsFrCommon {
+  learn_more: String
+  read_more: String
+  view_all: String
+  back_to: String
+  send_message: String
+}
+
+type TranslationsFrHome {
+  hero_title: String
+  hero_subtitle: String
+  hero_cta: String
+  stats_trainings: String
+  stats_beneficiaries: String
+  stats_partners: String
+  our_impact: String
+  mission_title: String
+  mission_description: String
+  programs_title: String
+  programs_subtitle: String
+  news_title: String
+  news_subtitle: String
+}
+
+type TranslationsFrAbout {
+  title: String
+  subtitle: String
+  mission: String
+  vision: String
+  team: String
+  history: String
+}
+
+type TranslationsFrContact {
+  title: String
+  subtitle: String
+  office: String
+  phone: String
+  email: String
+  form_name: String
+  form_email: String
+  form_subject: String
+  form_message: String
+  form_submit: String
+  hours: String
+  faq: String
+}
+
+type TranslationsFrPrograms {
+  training: String
+  advocacy: String
+  research: String
+  impact: String
+  implementation: String
+  partners: String
+  participatory_methodology: String
+  results_based: String
+}
+
+type TranslationsFr {
+  navigation: TranslationsFrNavigation
+  common: TranslationsFrCommon
+  home: TranslationsFrHome
+  about: TranslationsFrAbout
+  contact: TranslationsFrContact
+  programs: TranslationsFrPrograms
+}
+
+type TranslationsArCommon {
+  learn_more: String
+  read_more: String
+  view_all: String
+  back_to: String
+  send_message: String
+}
+
+type TranslationsArHome {
+  hero_title: String
+  hero_subtitle: String
+  hero_cta: String
+  stats_trainings: String
+  stats_beneficiaries: String
+  stats_partners: String
+  our_impact: String
+  mission_title: String
+  mission_description: String
+  programs_title: String
+  programs_subtitle: String
+  news_title: String
+  news_subtitle: String
+}
+
+type TranslationsArAbout {
+  title: String
+  subtitle: String
+  mission: String
+  vision: String
+  team: String
+  history: String
+}
+
+type TranslationsArContact {
+  title: String
+  subtitle: String
+  office: String
+  phone: String
+  email: String
+  form_name: String
+  form_email: String
+  form_subject: String
+  form_message: String
+  form_submit: String
+  hours: String
+  faq: String
+}
+
+type TranslationsArPrograms {
+  training: String
+  advocacy: String
+  research: String
+  impact: String
+  implementation: String
+  partners: String
+  participatory_methodology: String
+  results_based: String
+}
+
+type TranslationsAr {
+  navigation: String
+  common: TranslationsArCommon
+  home: TranslationsArHome
+  about: TranslationsArAbout
+  contact: TranslationsArContact
+  programs: TranslationsArPrograms
+}
+
+type Translations implements Node & Document {
+  fr: TranslationsFr
+  ar: TranslationsAr
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input TranslationsFrNavigationFilter {
+  home: StringFilter
+  about: StringFilter
+  programs: StringFilter
+  news: StringFilter
+  review: StringFilter
+  resources: StringFilter
+  testimonials: StringFilter
+  collaborations_ong: StringFilter
+  gallery: StringFilter
+  contact: StringFilter
+}
+
+input TranslationsFrCommonFilter {
+  learn_more: StringFilter
+  read_more: StringFilter
+  view_all: StringFilter
+  back_to: StringFilter
+  send_message: StringFilter
+}
+
+input TranslationsFrHomeFilter {
+  hero_title: StringFilter
+  hero_subtitle: StringFilter
+  hero_cta: StringFilter
+  stats_trainings: StringFilter
+  stats_beneficiaries: StringFilter
+  stats_partners: StringFilter
+  our_impact: StringFilter
+  mission_title: StringFilter
+  mission_description: StringFilter
+  programs_title: StringFilter
+  programs_subtitle: StringFilter
+  news_title: StringFilter
+  news_subtitle: StringFilter
+}
+
+input TranslationsFrAboutFilter {
+  title: StringFilter
+  subtitle: StringFilter
+  mission: StringFilter
+  vision: StringFilter
+  team: StringFilter
+  history: StringFilter
+}
+
+input TranslationsFrContactFilter {
+  title: StringFilter
+  subtitle: StringFilter
+  office: StringFilter
+  phone: StringFilter
+  email: StringFilter
+  form_name: StringFilter
+  form_email: StringFilter
+  form_subject: StringFilter
+  form_message: StringFilter
+  form_submit: StringFilter
+  hours: StringFilter
+  faq: StringFilter
+}
+
+input TranslationsFrProgramsFilter {
+  training: StringFilter
+  advocacy: StringFilter
+  research: StringFilter
+  impact: StringFilter
+  implementation: StringFilter
+  partners: StringFilter
+  participatory_methodology: StringFilter
+  results_based: StringFilter
+}
+
+input TranslationsFrFilter {
+  navigation: TranslationsFrNavigationFilter
+  common: TranslationsFrCommonFilter
+  home: TranslationsFrHomeFilter
+  about: TranslationsFrAboutFilter
+  contact: TranslationsFrContactFilter
+  programs: TranslationsFrProgramsFilter
+}
+
+input TranslationsArCommonFilter {
+  learn_more: StringFilter
+  read_more: StringFilter
+  view_all: StringFilter
+  back_to: StringFilter
+  send_message: StringFilter
+}
+
+input TranslationsArHomeFilter {
+  hero_title: StringFilter
+  hero_subtitle: StringFilter
+  hero_cta: StringFilter
+  stats_trainings: StringFilter
+  stats_beneficiaries: StringFilter
+  stats_partners: StringFilter
+  our_impact: StringFilter
+  mission_title: StringFilter
+  mission_description: StringFilter
+  programs_title: StringFilter
+  programs_subtitle: StringFilter
+  news_title: StringFilter
+  news_subtitle: StringFilter
+}
+
+input TranslationsArAboutFilter {
+  title: StringFilter
+  subtitle: StringFilter
+  mission: StringFilter
+  vision: StringFilter
+  team: StringFilter
+  history: StringFilter
+}
+
+input TranslationsArContactFilter {
+  title: StringFilter
+  subtitle: StringFilter
+  office: StringFilter
+  phone: StringFilter
+  email: StringFilter
+  form_name: StringFilter
+  form_email: StringFilter
+  form_subject: StringFilter
+  form_message: StringFilter
+  form_submit: StringFilter
+  hours: StringFilter
+  faq: StringFilter
+}
+
+input TranslationsArProgramsFilter {
+  training: StringFilter
+  advocacy: StringFilter
+  research: StringFilter
+  impact: StringFilter
+  implementation: StringFilter
+  partners: StringFilter
+  participatory_methodology: StringFilter
+  results_based: StringFilter
+}
+
+input TranslationsArFilter {
+  navigation: StringFilter
+  common: TranslationsArCommonFilter
+  home: TranslationsArHomeFilter
+  about: TranslationsArAboutFilter
+  contact: TranslationsArContactFilter
+  programs: TranslationsArProgramsFilter
+}
+
+input TranslationsFilter {
+  fr: TranslationsFrFilter
+  ar: TranslationsArFilter
+}
+
+type TranslationsConnectionEdges {
+  cursor: String!
+  node: Translations
+}
+
+type TranslationsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [TranslationsConnectionEdges]
+}
+
+type SettingsGeneral {
+  site_title_fr: String
+  site_title_ar: String
+  site_description_fr: String
+  site_description_ar: String
+  logo: String
+  favicon: String
+}
+
+type SettingsContact {
+  address_fr: String
+  address_ar: String
+  phone: String
+  email: String
+  hours_fr: String
+  hours_ar: String
+}
+
+type SettingsSocial {
+  facebook: String
+  twitter: String
+  instagram: String
+  linkedin: String
+  youtube: String
+}
+
+type SettingsFooter {
+  tagline_fr: String
+  tagline_ar: String
+  copyright_fr: String
+  copyright_ar: String
+}
+
+type SettingsNewsletter {
+  title_fr: String
+  title_ar: String
+  description_fr: String
+  description_ar: String
+  button_fr: String
+  button_ar: String
+  disclaimer_fr: String
+  disclaimer_ar: String
+}
+
+type Settings implements Node & Document {
+  general: SettingsGeneral
+  contact: SettingsContact
+  social: SettingsSocial
+  footer: SettingsFooter
+  newsletter: SettingsNewsletter
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input SettingsGeneralFilter {
+  site_title_fr: StringFilter
+  site_title_ar: StringFilter
+  site_description_fr: StringFilter
+  site_description_ar: StringFilter
+  logo: ImageFilter
+  favicon: ImageFilter
+}
+
+input SettingsContactFilter {
+  address_fr: StringFilter
+  address_ar: StringFilter
+  phone: StringFilter
+  email: StringFilter
+  hours_fr: StringFilter
+  hours_ar: StringFilter
+}
+
+input SettingsSocialFilter {
+  facebook: StringFilter
+  twitter: StringFilter
+  instagram: StringFilter
+  linkedin: StringFilter
+  youtube: StringFilter
+}
+
+input SettingsFooterFilter {
+  tagline_fr: StringFilter
+  tagline_ar: StringFilter
+  copyright_fr: StringFilter
+  copyright_ar: StringFilter
+}
+
+input SettingsNewsletterFilter {
+  title_fr: StringFilter
+  title_ar: StringFilter
+  description_fr: StringFilter
+  description_ar: StringFilter
+  button_fr: StringFilter
+  button_ar: StringFilter
+  disclaimer_fr: StringFilter
+  disclaimer_ar: StringFilter
+}
+
+input SettingsFilter {
+  general: SettingsGeneralFilter
+  contact: SettingsContactFilter
+  social: SettingsSocialFilter
+  footer: SettingsFooterFilter
+  newsletter: SettingsNewsletterFilter
+}
+
+type SettingsConnectionEdges {
+  cursor: String!
+  node: Settings
+}
+
+type SettingsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [SettingsConnectionEdges]
+}
+
+type Stats implements Node & Document {
+  trainings_count: Float
+  beneficiaries_count: Float
+  partners_count: Float
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
+input StatsFilter {
+  trainings_count: NumberFilter
+  beneficiaries_count: NumberFilter
+  partners_count: NumberFilter
+}
+
+type StatsConnectionEdges {
+  cursor: String!
+  node: Stats
+}
+
+type StatsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [StatsConnectionEdges]
+}
+
+type Programs implements Node & Document {
+  title_fr: String!
+  title_ar: String!
+  description_fr: String
+  description_ar: String
+  image: String
+  body_fr: JSON
+  body_ar: JSON
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input ProgramsFilter {
+  title_fr: StringFilter
+  title_ar: StringFilter
+  description_fr: StringFilter
+  description_ar: StringFilter
+  image: ImageFilter
+  body_fr: RichTextFilter
+  body_ar: RichTextFilter
+}
+
+type ProgramsConnectionEdges {
+  cursor: String!
+  node: Programs
+}
+
+type ProgramsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [ProgramsConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
   deleteDocument(collection: String, relativePath: String!): DocumentNode!
   createDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
   createFolder(collection: String, relativePath: String!): DocumentNode!
+  updatePages(relativePath: String!, params: PagesMutation!): Pages!
+  createPages(relativePath: String!, params: PagesMutation!): Pages!
   updateNews(relativePath: String!, params: NewsMutation!): News!
   createNews(relativePath: String!, params: NewsMutation!): News!
   updateMission(relativePath: String!, params: MissionMutation!): Mission!
   createMission(relativePath: String!, params: MissionMutation!): Mission!
+  updateTranslations(relativePath: String!, params: TranslationsMutation!): Translations!
+  createTranslations(relativePath: String!, params: TranslationsMutation!): Translations!
+  updateSettings(relativePath: String!, params: SettingsMutation!): Settings!
+  createSettings(relativePath: String!, params: SettingsMutation!): Settings!
+  updateStats(relativePath: String!, params: StatsMutation!): Stats!
+  createStats(relativePath: String!, params: StatsMutation!): Stats!
+  updatePrograms(relativePath: String!, params: ProgramsMutation!): Programs!
+  createPrograms(relativePath: String!, params: ProgramsMutation!): Programs!
 }
 
 input DocumentUpdateMutation {
+  pages: PagesMutation
   news: NewsMutation
   mission: MissionMutation
+  translations: TranslationsMutation
+  settings: SettingsMutation
+  stats: StatsMutation
+  programs: ProgramsMutation
   relativePath: String
 }
 
 input DocumentMutation {
+  pages: PagesMutation
   news: NewsMutation
   mission: MissionMutation
+  translations: TranslationsMutation
+  settings: SettingsMutation
+  stats: StatsMutation
+  programs: ProgramsMutation
+}
+
+input PagesSectionsMutation {
+  section_title_fr: String
+  section_title_ar: String
+  section_content_fr: JSON
+  section_content_ar: JSON
+  section_image: String
+  section_image_alt_fr: String
+  section_image_alt_ar: String
+}
+
+input PagesMutation {
+  title_fr: String
+  title_ar: String
+  description_fr: String
+  description_ar: String
+  header_image: String
+  body_fr: JSON
+  body_ar: JSON
+  sections: [PagesSectionsMutation]
 }
 
 input NewsMutation {
@@ -266,6 +888,228 @@ input MissionMutation {
   image_title_ar: String
   image_description_fr: String
   image_description_ar: String
+}
+
+input TranslationsFrNavigationMutation {
+  home: String
+  about: String
+  programs: String
+  news: String
+  review: String
+  resources: String
+  testimonials: String
+  collaborations_ong: String
+  gallery: String
+  contact: String
+}
+
+input TranslationsFrCommonMutation {
+  learn_more: String
+  read_more: String
+  view_all: String
+  back_to: String
+  send_message: String
+}
+
+input TranslationsFrHomeMutation {
+  hero_title: String
+  hero_subtitle: String
+  hero_cta: String
+  stats_trainings: String
+  stats_beneficiaries: String
+  stats_partners: String
+  our_impact: String
+  mission_title: String
+  mission_description: String
+  programs_title: String
+  programs_subtitle: String
+  news_title: String
+  news_subtitle: String
+}
+
+input TranslationsFrAboutMutation {
+  title: String
+  subtitle: String
+  mission: String
+  vision: String
+  team: String
+  history: String
+}
+
+input TranslationsFrContactMutation {
+  title: String
+  subtitle: String
+  office: String
+  phone: String
+  email: String
+  form_name: String
+  form_email: String
+  form_subject: String
+  form_message: String
+  form_submit: String
+  hours: String
+  faq: String
+}
+
+input TranslationsFrProgramsMutation {
+  training: String
+  advocacy: String
+  research: String
+  impact: String
+  implementation: String
+  partners: String
+  participatory_methodology: String
+  results_based: String
+}
+
+input TranslationsFrMutation {
+  navigation: TranslationsFrNavigationMutation
+  common: TranslationsFrCommonMutation
+  home: TranslationsFrHomeMutation
+  about: TranslationsFrAboutMutation
+  contact: TranslationsFrContactMutation
+  programs: TranslationsFrProgramsMutation
+}
+
+input TranslationsArCommonMutation {
+  learn_more: String
+  read_more: String
+  view_all: String
+  back_to: String
+  send_message: String
+}
+
+input TranslationsArHomeMutation {
+  hero_title: String
+  hero_subtitle: String
+  hero_cta: String
+  stats_trainings: String
+  stats_beneficiaries: String
+  stats_partners: String
+  our_impact: String
+  mission_title: String
+  mission_description: String
+  programs_title: String
+  programs_subtitle: String
+  news_title: String
+  news_subtitle: String
+}
+
+input TranslationsArAboutMutation {
+  title: String
+  subtitle: String
+  mission: String
+  vision: String
+  team: String
+  history: String
+}
+
+input TranslationsArContactMutation {
+  title: String
+  subtitle: String
+  office: String
+  phone: String
+  email: String
+  form_name: String
+  form_email: String
+  form_subject: String
+  form_message: String
+  form_submit: String
+  hours: String
+  faq: String
+}
+
+input TranslationsArProgramsMutation {
+  training: String
+  advocacy: String
+  research: String
+  impact: String
+  implementation: String
+  partners: String
+  participatory_methodology: String
+  results_based: String
+}
+
+input TranslationsArMutation {
+  navigation: String
+  common: TranslationsArCommonMutation
+  home: TranslationsArHomeMutation
+  about: TranslationsArAboutMutation
+  contact: TranslationsArContactMutation
+  programs: TranslationsArProgramsMutation
+}
+
+input TranslationsMutation {
+  fr: TranslationsFrMutation
+  ar: TranslationsArMutation
+}
+
+input SettingsGeneralMutation {
+  site_title_fr: String
+  site_title_ar: String
+  site_description_fr: String
+  site_description_ar: String
+  logo: String
+  favicon: String
+}
+
+input SettingsContactMutation {
+  address_fr: String
+  address_ar: String
+  phone: String
+  email: String
+  hours_fr: String
+  hours_ar: String
+}
+
+input SettingsSocialMutation {
+  facebook: String
+  twitter: String
+  instagram: String
+  linkedin: String
+  youtube: String
+}
+
+input SettingsFooterMutation {
+  tagline_fr: String
+  tagline_ar: String
+  copyright_fr: String
+  copyright_ar: String
+}
+
+input SettingsNewsletterMutation {
+  title_fr: String
+  title_ar: String
+  description_fr: String
+  description_ar: String
+  button_fr: String
+  button_ar: String
+  disclaimer_fr: String
+  disclaimer_ar: String
+}
+
+input SettingsMutation {
+  general: SettingsGeneralMutation
+  contact: SettingsContactMutation
+  social: SettingsSocialMutation
+  footer: SettingsFooterMutation
+  newsletter: SettingsNewsletterMutation
+}
+
+input StatsMutation {
+  trainings_count: Float
+  beneficiaries_count: Float
+  partners_count: Float
+}
+
+input ProgramsMutation {
+  title_fr: String
+  title_ar: String
+  description_fr: String
+  description_ar: String
+  image: String
+  body_fr: JSON
+  body_ar: JSON
 }
 
 schema {
